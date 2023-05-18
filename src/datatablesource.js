@@ -1,3 +1,67 @@
+import { useContext } from 'react';
+import axios from 'axios';
+import { DarkModeContext } from './context/darkModeContext';
+
+const host = 'http://localhost/cofedal-api/api';
+const qs = require('qs');
+
+export const branchColumns = [
+  { field: "id", headerName: "ID", width: 70 },
+  {
+    field: "name",
+    headerName: "name",
+    width: 150,
+  },
+
+  {
+    field: "description",
+    headerName: "description",
+    width: 400,
+  },
+];
+export const federationColumns = [
+  { field: "id", headerName: "ID", width: 70 },
+  {
+    field: "short_name",
+    headerName: "nom abrégé",
+    width: 150,
+  },
+  {
+    field: "full_name",
+    headerName: "nom developpé",
+    width: 150,
+  },
+  {
+    field: "description",
+    headerName: "description",
+    width: 400,
+  },
+  {
+    field: "branch_id",
+    headerName: "ID de banch",
+    width: 150,
+  },
+
+];
+export const associationColumns = [
+  { field: "id", headerName: "ID", width: 70 },
+  {
+    field: "name",
+    headerName: "name",
+    width: 150,
+  },
+
+  {
+    field: "description",
+    headerName: "description",
+    width: 400,
+  },
+  {
+    field: "federation_id",
+    headerName: "ID fedeation",
+    width: 400,
+  },
+];
 export const userColumns = [
   { field: "id", headerName: "ID", width: 70 },
   {
@@ -121,3 +185,16 @@ export const userRows = [
     age: 65,
   },
 ];
+
+export const GetBranch = () => {
+  const { setBranchData } = useContext(DarkModeContext)
+
+  axios.post('http://localhost/cofedal-api/api/', qs.stringify({
+    'action': 'find',
+    'table': 'branch'
+  })).then(resp => {
+    // console.log(resp.da)
+    setBranchData(resp.data)
+    return resp.data
+  })
+}

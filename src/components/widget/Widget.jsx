@@ -16,9 +16,9 @@ const diff = 20;
 switch (type) {
     case "user":
         data = {
-            title: "USERS",
+            title: "Membres",
             isMoney: false,
-            link: "See all users",
+            link: "Voir tous les membres",
             icon: (
                 <PersonOutlineOutlined 
                 className="icon" 
@@ -32,9 +32,9 @@ switch (type) {
         break;
         case "order":
             data = {
-                title: "ORDERS",
+                title: "Association",
                 isMoney: false,
-                link: "View all orders",
+                link: "Voir les associations",
                 icon: (
                     <ShoppingCartOutlinedIcon className="icon" 
                     style={{
@@ -47,9 +47,9 @@ switch (type) {
             break;
             case "earning":
                 data = {
-                    title: "EARNINGS",
-                    isMoney: true,
-                    link: "View net earnings",
+                    title: "Federations",
+                    isMoney: false,
+                    link: "Voir les federations",
                     icon: (
                         <MonetizationOnOutlined className="icon" 
                         style={{
@@ -62,9 +62,9 @@ switch (type) {
                 break;
                 case "balance":
                     data = {
-                        title: "BALANCE",
-                        isMoney: true,
-                        link: "See details",
+                        title: "Branche",
+                        isMoney: false,
+                        link: "Voir toutes les branches",
                         icon: (
                             <AccountBalanceWalletOutLinedIcon className="icon" 
                             style={{
@@ -83,7 +83,7 @@ switch (type) {
     <div className="widget">
       <div className="left">
             <span className="title">{data.title}</span>
-            <span className="counter">{data.isMoney && "ZMK"} {amount}</span>
+            <span className="counter">{data.isMoney && "CFA"} {amount}</span>
             <span className="link">{data.link}</span>
       </div>
       <div className="right">

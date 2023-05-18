@@ -7,6 +7,11 @@ import { productInputs, userInputs } from "./formSource";
 import "./style/dark.scss";
 import { useContext} from "react";
 import { DarkModeContext} from "./context/darkModeContext";
+import Branch from "./pages/cofedalci/branch/branch";
+import Federation from "./pages/cofedalci/federation/federation";
+import Association from "./pages/cofedalci/association/association";
+import Members from "./pages/cofedalci/members/members";
+import MemberForm from "./pages/cofedalci/members/new/form";
 
 import {
   BrowserRouter,
@@ -35,6 +40,26 @@ function App() {
         <Route index element={<List/>}/>
         <Route path=":productId" element={<Single/>}/>
         <Route path="new" element={<New inputs={productInputs} title="Add New Product"/>}/>
+      </Route>
+      <Route path="branch">
+        <Route index element={<Branch/>}/>
+        <Route path=":productId" element={<Single/>}/>
+        <Route path="new" element={<New inputs={productInputs} title="Add New Product"/>}/>
+      </Route>
+      <Route path="federation">
+        <Route index element={<Federation/>}/>
+        <Route path=":productId" element={<Single/>}/>
+        <Route path="new" element={<New inputs={productInputs} title="Add New Product"/>}/>
+      </Route>
+      <Route path="association">
+        <Route index element={<Association/>}/>
+        <Route path=":productId" element={<Single/>}/>
+        <Route path="new" element={<New inputs={productInputs} title="Add New Product"/>}/>
+      </Route>
+      <Route path="members">
+        <Route index element={<Members/>}/>
+        <Route path=":productId" element={<Single/>}/>
+        <Route path="addMember" element={<MemberForm />}/>
       </Route>
       </Route>
     </Routes>

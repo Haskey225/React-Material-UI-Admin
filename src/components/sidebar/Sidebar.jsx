@@ -11,95 +11,76 @@ import PsychologyOutlinedIcon from '@mui/icons-material/PsychologyOutlined';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import InputOutlinedIcon from '@mui/icons-material/InputOutlined';
-import {Link} from "react-router-dom";
-import { useContext} from "react";
-import { DarkModeContext} from "../../context/darkModeContext";
+import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { DarkModeContext } from "../../context/darkModeContext";
 
 const Sidebar = () => {
 
-  const {dispatch} = useContext(DarkModeContext)
+  const { dispatch } = useContext(DarkModeContext)
 
   return (
-    <div className="sidebar"> 
-    <div className="top">
-      <Link to="/" style={{textDecoration: "none"}}>
+    <div className="sidebar">
+      <div className="top">
+        <Link to="/" style={{ textDecoration: "none" }}>
 
-     <span className="logo">Zykar Admin</span>
-     </Link>
-    </div>
-    <hr />
-    <div className="center">
+          <span className="logo">COFEDALCI-ADMIN</span>
+        </Link>
+      </div>
+      <hr />
+      <div className="center">
         <ul>
-           <p className="title">MAIN</p>
-          <li>
-            <DashboardIcon className="icon" />
-            <span>Dashboard</span>
-            </li>
-            <p className="title">LISTS</p>
-            <Link to="/users" style={{textDecoration: "none"}}>
+          <p className="title">MAIN</p>
+          <Link to="/" style={{ textDecoration: 'none' }}>
             <li>
-              <PersonOutlineOutlinedIcon className="icon" />
-            <span>Users</span>
+              <DashboardIcon className="icon" />
+              <span>Tableau de bord</span>
             </li>
-            </Link>
-            <Link to="/products" style={{textDecoration: "none"}}>
+          </Link>
+          <Link to="/branch" style={{ textDecoration: "none" }}>
             <li>
               <StoreIcon className="icon" />
-            <span>Products</span>
+              <span>Branch</span>
             </li>
-            </Link>
+          </Link>
+          <Link to="/federation" style={{ textDecoration: "none" }}>
             <li>
-              <CreditCardIcon className="icon" />
-            <span>Orders</span>
+              <StoreIcon className="icon" />
+              <span>Fedeation</span>
             </li>
+          </Link>
+          <Link to="/association" style={{ textDecoration: "none" }}>
             <li>
-              <LocalShippingIcon className="icon" />
-            <span>Delivery</span>
+              <StoreIcon className="icon" />
+              <span>Association</span>
             </li>
-            <p className="title">USEFUL LINKS</p>
+          </Link>
+          <p className="title">Utilisateurs</p>
+          <Link to="/members" style={{ textDecoration: "none" }}>
             <li>
-              <AnalyticsIcon className="icon" />
-            <span>Stats</span>
+              <PersonOutlineOutlinedIcon className="icon" />
+              <span>Membres</span>
             </li>
-            <li>
-              <NotificationsNoneOutlinedIcon className="icon" />
-            <span>Notifications</span>
-            </li>
-            <p className="title">SERVICE</p>
-            <li>
-              <SettingsSystemDaydreamOutlinedIcon className="icon" />
-            <span>System Health</span>
-            </li>
-            <li>
-              <PsychologyOutlinedIcon className="icon" />
-            <span>Logs</span>
-            </li>
-            <li>
-              <AccountCircleOutlinedIcon className="icon" />
-            <span>Settings</span>
-            </li>
-            <p className="title">USER</p>
-            <li>
-              <SettingsOutlinedIcon className="icon" />
-            <span>Profile</span>
-            </li>
-            <li>
-              <InputOutlinedIcon className="icon" />
-            <span>Logout</span>
-            </li>
+          </Link>
+
+          <p className="title">Paramettre</p>
+          <li>
+            <InputOutlinedIcon className="icon" />
+            <span>Deco</span>
+          </li>
         </ul>
 
-    </div>
-    <div className="bottom">
-        <div className="colorOption" 
-        onClick={() => dispatch({ type : "LIGHT"})}>
+      </div>
+      <div className="bottom">
+        <div className="colorOption"
+          onClick={() => dispatch({ type: "LIGHT" })}>
         </div>
 
-          <div className="colorOption"
-        onClick={() => dispatch({ type : "DARK"})}>
+        <div className="colorOption"
+          onClick={() => dispatch({ type: "DARK" })}>
         </div>
 
-    </div>
+      </div>
     </div>
   )
 }

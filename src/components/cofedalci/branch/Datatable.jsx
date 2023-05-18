@@ -1,25 +1,30 @@
 import "./datatable.scss";
 import { DataGrid } from "@mui/x-data-grid";
-import { userColumns, userRows, GetBranch } from "../../datatablesource";
+import { userColumns, userRows, GetBranch, branchColumns } from "../../../datatablesource";
 import { Link } from "react-router-dom";
 import { useState, useContext, useEffect } from "react";
 
-import { DarkModeContext } from "../../context/darkModeContext";
+import axios from 'axios';
 
+import { DarkModeContext } from "../../../context/darkModeContext";
+
+const qs = require('qs');
 function Datatable() {
   const [data, setData] = useState(userRows);
-  const { branchData } = useContext(DarkModeContext);
 
   const handleDelete = (id) => {
     setData(data.filter((item) => item.id !== id));
   };
-  // GetBranch();
-  GetBranch();
 
   useEffect(() => {
-    console.log(branchData);
-  }, []);
-
+    axios.post('http://localhost/cofedal-api/api/', qs.stringify({
+      'action': 'find',
+      'table': 'branch'
+    })).then(resp => {
+      console.log(resp.data)
+      setData(resp.data)
+    })
+  }, [])
 
   const actionColumn = [
     {
@@ -54,7 +59,7 @@ function Datatable() {
       <DataGrid
         className="datagrid"
         rows={data}
-        columns={userColumns.concat(actionColumn)}
+        columns={branchColumns.concat(actionColumn)}
         pageSize={9}
         rowsPerPageOptions={[9]}
         checkboxSelection
