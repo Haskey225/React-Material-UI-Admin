@@ -17,13 +17,13 @@ const Navbar = () => {
     <div className="navbar">
       <div className="wrapper">
         <div className="search">
-          <input type="text" placeholder="Search...." />
+          <input type="text" placeholder="Recherche...." />
           <SearchOutlinedIcon />
         </div>
         <div className="items">
           <div className="item">
             <LanguageOutlinedIcon className="icon" />
-            English
+            EN
           </div>
           <div className="item">
             <DarkModeOutlined className="icon" onClick={() => dispatch({type:"TOGGLE"})}/>
@@ -43,7 +43,7 @@ const Navbar = () => {
             <ListOutLinedIcon className="icon" />
           </div>
           <div className="item">
-           <img src="https://images.pexels.com/photos/1967902/pexels-photo-1967902.jpeg?auto=compress&cs=tinysrgb&w=600" alt="" className="avatar"/>
+           <img src="https://cofedalci.org/wp-content/uploads/2023/04/cropped-logo512-1-e1682865273108.png" alt="" className="avatar"/>
           </div>
         </div>
       </div>

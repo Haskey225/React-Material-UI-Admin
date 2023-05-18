@@ -81,7 +81,8 @@ const List = () => {
         </TableRow>
       </TableHead>
       <TableBody>
-        {rows.map((row) => (
+        <p>Aucun membre</p>
+        {/* {rows.map((row) => (
           <TableRow
             key={row.id} >
             <TableCell className="tableCell" align="right">{row.id}</TableCell>
@@ -99,7 +100,7 @@ const List = () => {
               <span className={`status ${row.status}`}>{row.status}</span>
             </TableCell>
           </TableRow>
-        ))}
+        ))} */}
       </TableBody>
     </Table>
   </TableContainer>

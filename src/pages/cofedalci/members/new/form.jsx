@@ -269,7 +269,7 @@ export default function MemberForm() {
                             <div className="formInput">
                                 <label>District</label>
                                 <select name='district' onChange={(e) => handleLocationChange(e)}>
-                                    <option>Selectionnez votre district</option>
+                                    <option>{districtState ? 'Selectionnez votre district' : 'Aucun element trouve'} </option>
                                     {
                                         districtState && districtState.map((item, index) =>
                                             <option value={item.id}>{item.name}</option>
@@ -281,7 +281,7 @@ export default function MemberForm() {
                                 <label>Region</label>
                                 <select name='region' onChange={(e => handleLocationChange(e))}>
                                     <option>
-                                        Selectionnez votre Region
+                                        {regionState ? 'Selectionnez votre Region' : '(Aucun) veuillez selectionnez un district'}
                                     </option>
                                     {
                                         regionState && regionState.map((item, index) =>
@@ -291,10 +291,10 @@ export default function MemberForm() {
                                 </select>
                             </div>
                             <div className="formInput">
-                                <label>Commune/Departement</label>
-                                <select name='department' onChange={(e) => handleMemberState(e)}>
+                                <label>Departement</label>
+                                <select name='department' onChange={(e) => handleLocationChange(e)}>
                                     <option>
-                                        Selectionnez votre departement
+                                    {departementState ? 'Selectionnez votre departement' : '(Aucun) veuillez selectionnez une region'}
                                     </option>
                                     {
                                         departementState && departementState.map((item, index) =>
@@ -303,11 +303,11 @@ export default function MemberForm() {
                                     }
                                 </select>
                             </div>
-                            {/* <div className="formInput">
+                            <div className="formInput">
                                 <label>Commune</label>
                                 <select name='community' onChange={(e) => handleMemberState(e)}>
                                     <option>
-                                        Selectionnez votre commune
+                                    {communityState ? 'Selectionnez votre commune' : '(Aucun) veuillez selectionnez un departement'}
                                     </option>
                                     {
                                         communityState && communityState.map((item, index) =>
@@ -315,7 +315,7 @@ export default function MemberForm() {
                                         )
                                     }
                                 </select>
-                            </div> */}
+                            </div>
                             <div className="formInput">
                                 <label>Quatier/Village</label>
                                 <input onChange={(e) => handleMemberState(e)} type='text' placeholder='entrez votre le nom de votre quartier' />
