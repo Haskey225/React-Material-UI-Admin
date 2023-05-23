@@ -2,11 +2,9 @@ import "./datatable.scss";
 import { DataGrid } from "@mui/x-data-grid";
 import { userRows, federationColumns } from "../../../datatablesource";
 import { Link } from "react-router-dom";
-import { useState, useContext, useEffect } from "react";
+import { useState, useEffect } from "react";
 
 import axios from 'axios';
-
-import { DarkModeContext } from "../../../context/darkModeContext";
 
 const qs = require('qs');
 function Datatable() {
@@ -21,7 +19,7 @@ function Datatable() {
       'action': 'find',
       'table': 'federation'
     })).then(resp => {
-      console.log(resp.data)
+      // console.log(resp.data)
       setData(resp.data)
     })
   }, [])
@@ -52,7 +50,7 @@ function Datatable() {
     <div className="datatable">
       <div className="datatableTitle">
         Ajouter un membre
-        <Link to="/users/new" className="link">
+        <Link to="/federation/addfederation" className="link">
           Nouveau
         </Link>
       </div>

@@ -83,7 +83,7 @@ switch (type) {
     <div className="widget">
       <div className="left">
             <span className="title">{data.title}</span>
-            <span className="counter">{data.isMoney && "CFA"} {amount}</span>
+            <span className="counter">{data.isMoney? "CFA" : null} {amount}</span>
             <span className="link">{data.link}</span>
       </div>
       <div className="right">

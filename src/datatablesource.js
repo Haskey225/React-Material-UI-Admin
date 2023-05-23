@@ -1,8 +1,6 @@
-import { useContext } from 'react';
 import axios from 'axios';
-import { DarkModeContext } from './context/darkModeContext';
 
-const host = 'http://localhost/cofedal-api/api';
+const host = 'http://localhost/cofedal-api/api/';
 const qs = require('qs');
 
 export const branchColumns = [
@@ -60,6 +58,95 @@ export const associationColumns = [
     field: "federation_id",
     headerName: "ID fedeation",
     width: 400,
+  },
+];
+export const metierColumns = [
+  { field: "id", headerName: "ID", width: 70 },
+  {
+    field: "name",
+    headerName: "name",
+    width: 100,
+  },
+
+  {
+    field: "description",
+    headerName: "description",
+    width: 200,
+  },
+  {
+    field: "branch_id",
+    headerName: "ID fedeation",
+    width: 100,
+  },
+];
+export const districtColumns = [
+  { field: "id", headerName: "ID", width: 70 },
+  {
+    field: "name",
+    headerName: "name",
+    width: 150,
+  },
+
+  {
+    field: "iso_3",
+    headerName: "ISO-3 du pays",
+    width: 70,
+  },
+];
+export const regionColumns = [
+  { field: "id", headerName: "ID", width: 70 },
+  {
+    field: "name",
+    headerName: "name",
+    width: 150,
+  },
+
+  {
+    field: "district_id",
+    headerName: "ID District",
+    width: 70,
+  },
+];
+export const departmentColumns = [
+  { field: "id", headerName: "ID", width: 70 },
+  {
+    field: "name",
+    headerName: "name",
+    width: 150,
+  },
+
+  {
+    field: "region_id",
+    headerName: "ID de Region",
+    width: 70,
+  },
+];
+export const communityColumns = [
+  { field: "id", headerName: "ID", width: 70 },
+  {
+    field: "name",
+    headerName: "name",
+    width: 150,
+  },
+
+  {
+    field: "department_id",
+    headerName: "ID de Departement",
+    width: 70,
+  },
+];
+export const areaColumns = [
+  { field: "id", headerName: "ID", width: 70 },
+  {
+    field: "name",
+    headerName: "name",
+    width: 150,
+  },
+
+  {
+    field: "community_id",
+    headerName: "ID de la Commune",
+    width: 70,
   },
 ];
 export const userColumns = [
@@ -186,15 +273,71 @@ export const userRows = [
   },
 ];
 
-export const GetBranch = () => {
-  const { setBranchData } = useContext(DarkModeContext)
-
-  axios.post('http://localhost/cofedal-api/api/', qs.stringify({
+export async function GetBranch() {
+  let datas;
+  await axios.post('http://localhost/cofedal-api/api/', qs.stringify({
     'action': 'find',
     'table': 'branch'
   })).then(resp => {
-    // console.log(resp.da)
-    setBranchData(resp.data)
+    // //console.log(resp.data)
+    // return new Promise(resp.data)
+    datas = resp.data
+  })
+
+  return datas
+}
+
+export const setBranch = (val) => {
+  axios.post(host, qs.stringify({
+    'action': 'save',
+    'table': 'branch',
+    'val': val
+  })).then(resp => {
+    // //console.log(resp.data);
     return resp.data
+  })
+}
+
+export const setFederation = (val) => {
+  axios.post(host, qs.stringify({
+    'action': 'save',
+    'table': 'federation',
+    'val': val
+  })).then(resp => {
+    //console.log(resp.data);
+    return resp.data
+  })
+
+}
+export const setAssociation = (val) => {
+  axios.post(host, qs.stringify({
+    'action': 'save',
+    'table': 'association',
+    'val': val
+  })).then(resp => {
+    //console.log(resp.data);
+    return resp.data
+  })
+
+}
+
+export const setMetier = (val) => {
+  axios.post(host, qs.stringify({
+    'action': 'save',
+    'table': 'metier',
+    'val': val
+  })).then(resp=>{
+    //console.log(resp.data)
+  })
+}
+
+export const setMember = (member, activity)=> {
+  axios.post(host, qs.stringify({
+    'action':'save',
+    'table':'member',
+    'member':member,
+    'activity':activity
+  })).then(resp =>{
+    //console.log(resp.data)
   })
 }

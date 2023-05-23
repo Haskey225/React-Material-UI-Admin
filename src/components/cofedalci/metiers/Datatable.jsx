@@ -1,6 +1,6 @@
 import "./datatable.scss";
 import { DataGrid } from "@mui/x-data-grid";
-import { userRows, associationColumns } from "../../../datatablesource";
+import { userRows, metierColumns } from "../../../datatablesource";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 
@@ -18,7 +18,7 @@ function Datatable() {
   useEffect(() => {
     axios.post('http://localhost/cofedal-api/api/', qs.stringify({
       'action': 'find',
-      'table': 'association'
+      'table': 'metiers'
     })).then(resp => {
       // console.log(resp.data)
       setData(resp.data)
@@ -51,14 +51,14 @@ function Datatable() {
     <div className="datatable">
       <div className="datatableTitle">
         Ajouter un membre
-        <Link to="/association/addAsso" className="link">
+        <Link to="/metiers/addMetiers" className="link">
           Nouveau
         </Link>
       </div>
       <DataGrid
         className="datagrid"
         rows={data}
-        columns={associationColumns.concat(actionColumn)}
+        columns={metierColumns.concat(actionColumn)}
         pageSize={9}
         rowsPerPageOptions={[9]}
         checkboxSelection

@@ -2,7 +2,7 @@ import "./datatable.scss";
 import { DataGrid } from "@mui/x-data-grid";
 import { userColumns, userRows, GetBranch, branchColumns } from "../../../datatablesource";
 import { Link } from "react-router-dom";
-import { useState, useContext, useEffect } from "react";
+import { useState, useEffect } from "react";
 
 import axios from 'axios';
 
@@ -10,7 +10,7 @@ import { DarkModeContext } from "../../../context/darkModeContext";
 
 const qs = require('qs');
 function Datatable() {
-  const [data, setData] = useState(userRows);
+  const [data, setData] = useState(null);
 
   const handleDelete = (id) => {
     setData(data.filter((item) => item.id !== id));
@@ -21,7 +21,7 @@ function Datatable() {
       'action': 'find',
       'table': 'branch'
     })).then(resp => {
-      console.log(resp.data)
+      // console.log(resp.data)
       setData(resp.data)
     })
   }, [])
@@ -51,19 +51,19 @@ function Datatable() {
   return (
     <div className="datatable">
       <div className="datatableTitle">
-        Ajouter un membre
-        <Link to="/users/new" className="link">
-          Nouveau
+        Ajouter une branche
+        <Link to="/branch/addbranch" className="link">
+          Ajouter
         </Link>
       </div>
-      <DataGrid
+     {data ? <DataGrid
         className="datagrid"
         rows={data}
         columns={branchColumns.concat(actionColumn)}
         pageSize={9}
         rowsPerPageOptions={[9]}
         checkboxSelection
-      />
+      /> : ''}
     </div>
   );
 };

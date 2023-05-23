@@ -1,11 +1,12 @@
 import "./datatable.scss";
 import { DataGrid } from "@mui/x-data-grid";
-import { userRows, associationColumns } from "../../../datatablesource";
+import { userColumns, userRows, districtColumns } from "../../../datatablesource";
 import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useContext, useEffect } from "react";
 
 import axios from 'axios';
 
+import { DarkModeContext } from "../../../context/darkModeContext";
 
 const qs = require('qs');
 function Datatable() {
@@ -18,7 +19,7 @@ function Datatable() {
   useEffect(() => {
     axios.post('http://localhost/cofedal-api/api/', qs.stringify({
       'action': 'find',
-      'table': 'association'
+      'table': 'district'
     })).then(resp => {
       // console.log(resp.data)
       setData(resp.data)
@@ -47,18 +48,19 @@ function Datatable() {
       },
     },
   ];
+  
   return (
     <div className="datatable">
       <div className="datatableTitle">
         Ajouter un membre
-        <Link to="/association/addAsso" className="link">
+        <Link to="/district/addDistrict" className="link">
           Nouveau
         </Link>
       </div>
       <DataGrid
         className="datagrid"
         rows={data}
-        columns={associationColumns.concat(actionColumn)}
+        columns={districtColumns.concat(actionColumn)}
         pageSize={9}
         rowsPerPageOptions={[9]}
         checkboxSelection

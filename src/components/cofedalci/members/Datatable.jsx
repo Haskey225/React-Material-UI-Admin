@@ -6,7 +6,6 @@ import { useState, useContext, useEffect } from "react";
 
 import axios from 'axios';
 
-import { DarkModeContext } from "../../../context/darkModeContext";
 
 const qs = require('qs');
 function Datatable() {
@@ -21,7 +20,7 @@ function Datatable() {
       'action': 'find',
       'table': 'member'
     })).then(resp => {
-      console.log(resp.data)
+      // console.log(resp.data)
       setData(resp.data)
     })
   }, [])

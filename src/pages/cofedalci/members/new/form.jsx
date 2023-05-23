@@ -5,6 +5,7 @@ import { DriveFolderUploadOutlined } from "@mui/icons-material";
 import { useState, useEffect } from "react";
 import { Select } from "@mui/material";
 import axios from "axios";
+import { setMember } from "../../../../datatablesource";
 
 
 const qs = require('qs');
@@ -17,7 +18,7 @@ const initialMemberState = {
     'whatsapp': '',
     'email': '',
     'community_id': 0, //Activity form ID
-    'area_name': 0 //Activity form ID
+    'area_name': '' //Activity form ID
 }
 
 const initialActivityState = {
@@ -66,7 +67,7 @@ export default function MemberForm() {
 
     const handleLocationChange = (e) => {
         const { name, value } = e.target;
-        console.log(value)
+        // console.log(value)
 
         switch (name) {
 
@@ -93,7 +94,7 @@ export default function MemberForm() {
                 })).then(resp => {
                     setDepartementState(resp.data);
                     setCommunityState(null)
-                    // console.log();
+                    // console.log(resp.data);
                 })
 
                 break;
@@ -132,6 +133,7 @@ export default function MemberForm() {
     //Sibmit form for member creation
     const submitForm = (e) => {
         e.preventDefault();
+        setMember(memberState, activityState)
 
     }
 
@@ -222,7 +224,7 @@ export default function MemberForm() {
                                     <option>Branche</option>
                                     {
                                         branchState && branchState.map((item, index) =>
-                                            <option value={item.id}>{item.name} </option>
+                                            <option key={index} value={item.id}>{item.name} </option>
                                         )
                                     }
                                 </select>
@@ -231,6 +233,9 @@ export default function MemberForm() {
                                 <label>Corps de métier</label>
                                 <select name='metier_id' onChange={(e) => handleActivityState(e)}>
                                     <option>Corps de metier</option>
+                                    {metierState && metierState.map((item, index) =>
+                                        <option key={index} value={item.id}> {item.name} </option>
+                                    )}
                                 </select>
                             </div>
                             <div className="formInput">
@@ -272,7 +277,7 @@ export default function MemberForm() {
                                     <option>{districtState ? 'Selectionnez votre district' : 'Aucun element trouve'} </option>
                                     {
                                         districtState && districtState.map((item, index) =>
-                                            <option value={item.id}>{item.name}</option>
+                                            <option key={index} value={item.id}>{item.name}</option>
                                         )
                                     }
                                 </select>
@@ -285,7 +290,7 @@ export default function MemberForm() {
                                     </option>
                                     {
                                         regionState && regionState.map((item, index) =>
-                                            <option value={item.id}>{item.name}</option>
+                                            <option key={index} value={item.id}>{item.name}</option>
                                         )
                                     }
                                 </select>
@@ -294,31 +299,31 @@ export default function MemberForm() {
                                 <label>Departement</label>
                                 <select name='department' onChange={(e) => handleLocationChange(e)}>
                                     <option>
-                                    {departementState ? 'Selectionnez votre departement' : '(Aucun) veuillez selectionnez une region'}
+                                        {departementState ? 'Selectionnez votre departement' : '(Aucun) veuillez selectionnez une region'}
                                     </option>
                                     {
                                         departementState && departementState.map((item, index) =>
-                                            <option value={item.id}>{item.name}</option>
+                                            <option key={index} value={item.id}>{item.name}</option>
                                         )
                                     }
                                 </select>
                             </div>
                             <div className="formInput">
                                 <label>Commune</label>
-                                <select name='community' onChange={(e) => handleMemberState(e)}>
+                                <select name='community_id' onChange={(e) => handleMemberState(e)}>
                                     <option>
-                                    {communityState ? 'Selectionnez votre commune' : '(Aucun) veuillez selectionnez un departement'}
+                                        {communityState ? 'Selectionnez votre commune' : '(Aucun) veuillez selectionnez un departement'}
                                     </option>
                                     {
                                         communityState && communityState.map((item, index) =>
-                                            <option value={item.id}>{item.name}</option>
+                                            <option key={index} value={item.id}>{item.name}</option>
                                         )
                                     }
                                 </select>
                             </div>
                             <div className="formInput">
                                 <label>Quatier/Village</label>
-                                <input onChange={(e) => handleMemberState(e)} type='text' placeholder='entrez votre le nom de votre quartier' />
+                                <input name="area_name" onChange={(e) => handleMemberState(e)} type='text' placeholder='entrez votre le nom de votre quartier' />
                             </div>
 
                             <h2>Autre information</h2>
