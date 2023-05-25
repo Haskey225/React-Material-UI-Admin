@@ -1,6 +1,5 @@
 import axios from 'axios';
-
-const host = 'http://localhost/cofedal-api/api/';
+import { app_config } from './config/app-config';
 const qs = require('qs');
 
 export const branchColumns = [
@@ -46,18 +45,23 @@ export const associationColumns = [
   {
     field: "name",
     headerName: "name",
-    width: 150,
+    width: 100,
   },
 
   {
     field: "description",
     headerName: "description",
-    width: 400,
+    width: 200,
   },
   {
     field: "federation_id",
     headerName: "ID fedeation",
-    width: 400,
+    width: 120,
+  },
+  {
+    field: "location_id",
+    headerName: "ID Lieux",
+    width: 120,
   },
 ];
 export const metierColumns = [
@@ -75,7 +79,7 @@ export const metierColumns = [
   },
   {
     field: "branch_id",
-    headerName: "ID fedeation",
+    headerName: "ID Branch",
     width: 100,
   },
 ];
@@ -275,7 +279,7 @@ export const userRows = [
 
 export async function GetBranch() {
   let datas;
-  await axios.post('http://localhost/cofedal-api/api/', qs.stringify({
+  await axios.post(app_config.host, qs.stringify({
     'action': 'find',
     'table': 'branch'
   })).then(resp => {
@@ -288,7 +292,7 @@ export async function GetBranch() {
 }
 
 export const setBranch = (val) => {
-  axios.post(host, qs.stringify({
+  axios.post(app_config.host, qs.stringify({
     'action': 'save',
     'table': 'branch',
     'val': val
@@ -299,7 +303,7 @@ export const setBranch = (val) => {
 }
 
 export const setFederation = (val) => {
-  axios.post(host, qs.stringify({
+  axios.post(app_config.host, qs.stringify({
     'action': 'save',
     'table': 'federation',
     'val': val
@@ -310,19 +314,19 @@ export const setFederation = (val) => {
 
 }
 export const setAssociation = (val) => {
-  axios.post(host, qs.stringify({
+  axios.post(app_config.host, qs.stringify({
     'action': 'save',
     'table': 'association',
     'val': val
   })).then(resp => {
-    //console.log(resp.data);
-    return resp.data
+    // console.log(resp.data);
+    // return resp.data
   })
 
 }
 
 export const setMetier = (val) => {
-  axios.post(host, qs.stringify({
+  axios.post(app_config.host, qs.stringify({
     'action': 'save',
     'table': 'metier',
     'val': val
@@ -332,7 +336,7 @@ export const setMetier = (val) => {
 }
 
 export const setMember = (member, activity)=> {
-  axios.post(host, qs.stringify({
+  axios.post(app_config.host, qs.stringify({
     'action':'save',
     'table':'member',
     'member':member,
