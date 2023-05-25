@@ -7,6 +7,7 @@ import { useState, useContext, useEffect } from "react";
 import axios from 'axios';
 
 import { DarkModeContext } from "../../../context/darkModeContext";
+import { app_config } from "../../../config/app-config";
 
 const qs = require('qs');
 function Datatable() {
@@ -17,7 +18,7 @@ function Datatable() {
   };
 
   useEffect(() => {
-    axios.post('http://localhost/cofedal-api/api/', qs.stringify({
+    axios.post(app_config.host, qs.stringify({
       'action': 'find',
       'table': 'district'
     })).then(resp => {
@@ -52,9 +53,9 @@ function Datatable() {
   return (
     <div className="datatable">
       <div className="datatableTitle">
-        Ajouter un membre
+      Liste des district
         <Link to="/district/addDistrict" className="link">
-          Nouveau
+          Ajouter
         </Link>
       </div>
       <DataGrid

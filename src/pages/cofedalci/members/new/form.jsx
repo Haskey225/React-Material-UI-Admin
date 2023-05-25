@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import { Select } from "@mui/material";
 import axios from "axios";
 import { setMember } from "../../../../datatablesource";
+import { app_config } from "../../../../config/app-config";
 
 
 const qs = require('qs');
@@ -72,7 +73,7 @@ export default function MemberForm() {
         switch (name) {
 
             case 'district':
-                axios.post('http://localhost/cofedal-api/api/', qs.stringify({
+                axios.post(app_config.host, qs.stringify({
                     'action': 'find',
                     'table': 'region',
                     'id': value
@@ -87,7 +88,7 @@ export default function MemberForm() {
 
             case 'region':
 
-                axios.post('http://localhost/cofedal-api/api/', qs.stringify({
+                axios.post(app_config.host, qs.stringify({
                     'action': 'find',
                     'table': 'department',
                     'id': value
@@ -101,7 +102,7 @@ export default function MemberForm() {
 
             case 'department':
 
-                axios.post('http://localhost/cofedal-api/api/', qs.stringify({
+                axios.post(app_config.host, qs.stringify({
                     'action': 'find',
                     'table': 'community',
                     'id': value
@@ -120,7 +121,7 @@ export default function MemberForm() {
     const handleBranchChange = (e) => {
         const { value } = e.target;
         //Ici on charge les corps de metiers en rapport avec la branch en passant l'id de la banche 
-        axios.post('http://localhost/cofedal-api/api/', qs.stringify({
+        axios.post(app_config.host, qs.stringify({
             'action': 'find',
             'table': 'metier',
             'branch_id': value
@@ -138,14 +139,14 @@ export default function MemberForm() {
     }
 
     useEffect(() => {
-        axios.post('http://localhost/cofedal-api/api/', qs.stringify({
+        axios.post(app_config.host, qs.stringify({
             'action': 'find',
             'table': 'branch'
         })).then(resp => {
             setBranchState(resp.data);
             // console.log(branchState);
         })
-        axios.post('http://localhost/cofedal-api/api/', qs.stringify({
+        axios.post(app_config.host, qs.stringify({
             'action': 'find',
             'table': 'district'
         })).then(resp => {

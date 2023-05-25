@@ -5,6 +5,7 @@ import { DriveFolderUploadOutlined } from "@mui/icons-material";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { setFederation, GetBranch } from "../../../../datatablesource";
+import { app_config } from "../../../../config/app-config";
 
 
 const qs = require('qs')
@@ -39,7 +40,7 @@ const FederationForm = () => {
   }
 
   useEffect(() => {
-    axios.post('http://localhost/cofedal-api/api/', qs.stringify({
+    axios.post(app_config.host, qs.stringify({
       'action': 'find',
       'table': 'branch'
     })).then(resp => {

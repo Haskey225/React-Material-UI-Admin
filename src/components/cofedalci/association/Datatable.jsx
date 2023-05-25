@@ -3,6 +3,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import { userRows, associationColumns } from "../../../datatablesource";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { app_config } from "../../../config/app-config";
 
 import axios from 'axios';
 
@@ -16,7 +17,7 @@ function Datatable() {
   };
 
   useEffect(() => {
-    axios.post('http://localhost/cofedal-api/api/', qs.stringify({
+    axios.post(app_config.host, qs.stringify({
       'action': 'find',
       'table': 'association'
     })).then(resp => {
@@ -50,9 +51,9 @@ function Datatable() {
   return (
     <div className="datatable">
       <div className="datatableTitle">
-        Ajouter un membre
+        Liste des associations
         <Link to="/association/addAsso" className="link">
-          Nouveau
+          Ajouter
         </Link>
       </div>
       <DataGrid

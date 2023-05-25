@@ -5,6 +5,7 @@ import { DriveFolderUploadOutlined } from "@mui/icons-material";
 import { setAssociation } from "../../../../datatablesource";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { app_config } from "../../../../config/app-config";
 
 
 const qs = require('qs');
@@ -27,19 +28,19 @@ const AssoForm = () => {
   }
 
   const saveAssociation = (e) => {
-    // e.preventDefault();
+    e.preventDefault();
     setAssociation(data)
 
   }
 
   useEffect(() => {
-    axios.post('http://localhost/cofedal-api/api/', qs.stringify({
+    axios.post(app_config.host, qs.stringify({
       'action': 'find',
       'table': 'federation'
     })).then(resp => {
       setFedState(resp.data)
     })
-    axios.post('http://localhost/cofedal-api/api/', qs.stringify({
+    axios.post(app_config.host, qs.stringify({
       'action': 'find',
       'table': 'community',
       'id': null

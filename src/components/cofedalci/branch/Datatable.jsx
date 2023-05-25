@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 
 import axios from 'axios';
 
-import { DarkModeContext } from "../../../context/darkModeContext";
+import { app_config } from "../../../config/app-config";
 
 const qs = require('qs');
 function Datatable() {
@@ -17,7 +17,7 @@ function Datatable() {
   };
 
   useEffect(() => {
-    axios.post('http://localhost/cofedal-api/api/', qs.stringify({
+    axios.post(app_config.host, qs.stringify({
       'action': 'find',
       'table': 'branch'
     })).then(resp => {
@@ -51,7 +51,7 @@ function Datatable() {
   return (
     <div className="datatable">
       <div className="datatableTitle">
-        Ajouter une branche
+      Liste des branches
         <Link to="/branch/addbranch" className="link">
           Ajouter
         </Link>

@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 
 import axios from 'axios';
+import { app_config } from "../../../config/app-config";
 
 
 const qs = require('qs');
@@ -16,7 +17,7 @@ function Datatable() {
   };
 
   useEffect(() => {
-    axios.post('http://localhost/cofedal-api/api/', qs.stringify({
+    axios.post(app_config.host, qs.stringify({
       'action': 'find',
       'table': 'metiers'
     })).then(resp => {
@@ -50,9 +51,9 @@ function Datatable() {
   return (
     <div className="datatable">
       <div className="datatableTitle">
-        Ajouter un membre
+        Liste des corps de métiers
         <Link to="/metiers/addMetiers" className="link">
-          Nouveau
+          Ajouter
         </Link>
       </div>
       <DataGrid
