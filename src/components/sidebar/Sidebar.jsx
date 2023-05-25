@@ -75,7 +75,7 @@ const Sidebar = () => {
               <span>District</span>
             </li>
           </Link>
-          
+
           <p className="title">Paramettre</p>
           <li>
             <InputOutlinedIcon className="icon" />
@@ -84,7 +84,7 @@ const Sidebar = () => {
         </ul>
 
       </div>
-      <div className="bottom">
+      {/* <div className="bottom">
         <div className="colorOption"
           onClick={() => dispatch({ type: "LIGHT" })}>
         </div>
@@ -93,7 +93,7 @@ const Sidebar = () => {
           onClick={() => dispatch({ type: "DARK" })}>
         </div>
 
-      </div>
+      </div> */}
     </div>
   )
 }

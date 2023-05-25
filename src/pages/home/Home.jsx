@@ -5,28 +5,35 @@ import Featured from "../../components/featured/Featured"
 import Chart from "../../components/chart/Chart"
 import Table from "../../components/table/Table"
 import "./home.scss"
+import { useState } from "react"
+
+import axios from "axios";
+import { useEffect } from "react";
+import { app_config } from "../../config/app-config";
 
 
 const Home = () => {
+
+
   return (
     <div className="home">
-      <Sidebar/>
+      <Sidebar />
       <div className="homeContainer">
-      <Navbar/>
-      <div className="widgets">
-        <Widget type="user"/>
-        <Widget type="order"/>
-        <Widget type="earning"/>
-        <Widget type="balance"/>
-      </div>
-      <div className="charts">
-        <Featured/>
-        <Chart title="Flux d'inscription des membres" aspect={2/1}/>
-      </div>
-      <div className="listContainer">
-        <div className="listTitle">Nouveau membres</div>
-        <Table/>
-      </div>
+        <Navbar />
+        <div className="widgets">
+          <Widget type="member"/>
+          <Widget type="association" />
+          <Widget type="federation" />
+          <Widget type="branch" />
+        </div>
+        <div className="charts">
+          <Featured />
+          <Chart title="Flux d'inscription des membres" aspect={2 / 1} />
+        </div>
+        <div className="listContainer">
+          <div className="listTitle">Nouveau membres</div>
+          <Table />
+        </div>
       </div>
     </div>
   )

@@ -3,12 +3,12 @@ import { AreaChart, Area, XAxis, CartesianGrid, Tooltip, ResponsiveContainer } f
 
 
 const data = [
-  { name: "Janvier", Total: 1100},
-  { name: "Fevrier", Total: 2100},
-  { name: "Mars", Total: 820},
-  { name: "Avril", Total: 1620},
-  { name: "Mai", Total: 820},
-  { name: "Juin", Total: 1720},
+  { name: "Avril", Total: 2},
+  { name: "Mai", Total: 1},
+  { name: "Juin", Total: 0},
+  { name: "Juillet", Total: 0},
+  { name: "Aout", Total: 0},
+  { name: "Septempbre", Total: 0},
 ];
 
 const Chart = ({aspect , title}) => {
