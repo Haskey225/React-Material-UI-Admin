@@ -175,7 +175,7 @@ export default function MemberForm() {
         e.preventDefault();
         console.log(memberState);
         console.log(activityState)
-        setMember(memberState, activityState)
+        setMember(memberState, activityState, file)
 
     }
 

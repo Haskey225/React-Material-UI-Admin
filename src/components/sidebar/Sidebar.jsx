@@ -12,12 +12,10 @@ import StoreIcon from '@mui/icons-material/Store';
 // import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import InputOutlinedIcon from '@mui/icons-material/InputOutlined';
 import { Link } from "react-router-dom";
-import { useContext } from "react";
-import { DarkModeContext } from "../../context/darkModeContext";
 
 const Sidebar = () => {
 
-  const { dispatch } = useContext(DarkModeContext)
+  // const { dispatch } = useContext(DarkModeContext)
 
   return (
     <div className="sidebar">

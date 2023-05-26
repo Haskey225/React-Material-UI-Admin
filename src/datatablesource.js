@@ -192,6 +192,33 @@ export const userColumns = [
     },
   },
 ];
+export const memberColumn = [
+  { field: "id", headerName: "ID", width: 70 },
+  {
+    field: "avatar",
+    headerName: "Profile",
+    width: 100,
+    renderCell: (params) => {
+      return (
+        <div className="cellWithImg">
+          <img className="cellImg" src={params.row.img} alt="avatar" />
+          {params.row.username}
+        </div>
+      );
+    },
+  },
+  {
+    field: "phone_number",
+    headerName: "Numero",
+    width: 100,
+  },
+
+  {
+    field: "email",
+    headerName: "Email",
+    width: 100,
+  },
+];
 
 //president coloumn
 export const assoPresiColumn = [

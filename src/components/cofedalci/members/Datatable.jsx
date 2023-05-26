@@ -1,8 +1,8 @@
 import "./datatable.scss";
 import { DataGrid } from "@mui/x-data-grid";
-import { userColumns, userRows, GetBranch, branchColumns } from "../../../datatablesource";
+import { memberColumn } from "../../../datatablesource";
 import { Link } from "react-router-dom";
-import { useState, useContext, useEffect } from "react";
+import { useState, useEffect } from "react";
 
 import axios from 'axios';
 import { app_config } from "../../../config/app-config";
@@ -59,7 +59,7 @@ function Datatable() {
       <DataGrid
         className="datagrid"
         rows={data}
-        columns={branchColumns.concat(actionColumn)}
+        columns={memberColumn.concat(actionColumn)}
         pageSize={9}
         rowsPerPageOptions={[9]}
         checkboxSelection

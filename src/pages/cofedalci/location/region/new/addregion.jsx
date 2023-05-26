@@ -3,7 +3,6 @@ import Sidebar from "../../../../../components/sidebar/Sidebar";
 import Navbar from "../../../../../components/navbar/Navbar";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { setMetier } from "../../../../../datatablesource";
 import { app_config } from "../../../../../config/app-config";
 
 

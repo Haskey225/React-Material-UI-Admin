@@ -2,7 +2,7 @@ import "./datatable.scss";
 import { DataGrid } from "@mui/x-data-grid";
 import { districtColumns } from "../../../../datatablesource";
 import { Link } from "react-router-dom";
-import { useState, useContext, useEffect } from "react";
+import { useState, useEffect } from "react";
 
 import axios from 'axios';
 

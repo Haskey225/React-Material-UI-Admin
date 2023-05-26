@@ -1,7 +1,6 @@
 import "./addasso.scss";
 import Sidebar from "../../../../components/sidebar/Sidebar";
 import Navbar from "../../../../components/navbar/Navbar";
-import { DriveFolderUploadOutlined } from "@mui/icons-material";
 import { setAssociation } from "../../../../datatablesource";
 import { useEffect, useState } from "react";
 import axios from "axios";

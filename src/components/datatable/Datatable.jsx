@@ -1,24 +1,20 @@
 import "./datatable.scss";
 import { DataGrid } from "@mui/x-data-grid";
-import { userColumns, userRows, GetBranch } from "../../datatablesource";
+import { userColumns } from "../../datatablesource";
 import { Link } from "react-router-dom";
-import { useState, useContext, useEffect } from "react";
+import { useState } from "react";
 
-import { DarkModeContext } from "../../context/darkModeContext";
 
 function Datatable() {
-  const [data, setData] = useState(userRows);
-  const { branchData } = useContext(DarkModeContext);
+  const [data, setData] = useState([]);
 
   const handleDelete = (id) => {
     setData(data.filter((item) => item.id !== id));
   };
   // GetBranch();
-  GetBranch();
 
-  useEffect(() => {
-    console.log(branchData);
-  }, []);
+
+
 
 
   const actionColumn = [

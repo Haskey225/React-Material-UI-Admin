@@ -2,7 +2,6 @@ import "./metier.scss";
 import Sidebar from "../../../../../components/sidebar/Sidebar";
 import Navbar from "../../../../../components/navbar/Navbar";
 import { useState } from "react";
-import { setMetier } from "../../../../../datatablesource";
 
 
 const initialState = {

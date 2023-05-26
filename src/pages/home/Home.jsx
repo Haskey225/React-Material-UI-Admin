@@ -5,11 +5,6 @@ import Featured from "../../components/featured/Featured"
 import Chart from "../../components/chart/Chart"
 import Table from "../../components/table/Table"
 import "./home.scss"
-import { useState } from "react"
-
-import axios from "axios";
-import { useEffect } from "react";
-import { app_config } from "../../config/app-config";
 
 
 const Home = () => {
