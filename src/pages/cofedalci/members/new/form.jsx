@@ -3,7 +3,6 @@ import Sidebar from "../../../../components/sidebar/Sidebar";
 import Navbar from "../../../../components/navbar/Navbar";
 import { DriveFolderUploadOutlined } from "@mui/icons-material";
 import { useState, useEffect } from "react";
-import { Select } from "@mui/material";
 import axios from "axios";
 import { setMember } from "../../../../datatablesource";
 import { app_config } from "../../../../config/app-config";
@@ -43,11 +42,16 @@ export default function MemberForm() {
     const [memberState, setMemberState] = useState(initialMemberState);
     const [activityState, setActivityState] = useState(initialActivityState);
 
+    const [federation, setFederation] = useState(null)
+    const [association, setAssociation] = useState(null)
+
+    const [fedPresi, setFedPresi] = useState(null)
+    const [assoPresi, setAssoPresi] = useState(null);
+
     const [districtState, setDistrictState] = useState(null);
     const [regionState, setRegionState] = useState(null);
     const [departementState, setDepartementState] = useState(null);
     const [communityState, setCommunityState] = useState(null);
-    const [areaState, setAreaState] = useState(null);
     const [metierState, setMetierState] = useState(null)
 
     const [branchState, setBranchState] = useState(null);
@@ -131,6 +135,39 @@ export default function MemberForm() {
         })
     }
 
+    //other information change
+    const handleOtherInformationChange = (e) => {
+        const { name, value } = e.target;
+        switch (name) {
+            case 'fed':
+
+                axios.post(app_config.host, qs.stringify({
+                    'action': 'find',
+                    'table': 'fedpresiid',
+                    'id': value
+                })).then(resp => {
+                    console.log(resp.data)
+                    setFedPresi(resp.data)
+                })
+
+                break;
+            case 'asso':
+                axios.post(app_config.host, qs.stringify({
+                    'action': 'find',
+                    'table': 'assopresiid',
+                    'id': value
+                })).then(resp => {
+                    console.log(resp.data)
+                    setAssoPresi(resp.data)
+                })
+
+                break;
+
+            default:
+                break;
+        }
+    }
+
     //Sibmit form for member creation
     const submitForm = (e) => {
         e.preventDefault();
@@ -153,6 +190,20 @@ export default function MemberForm() {
             setDistrictState(resp.data);
             // console.log(branchState);
         })
+        axios.post(app_config.host, qs.stringify({
+            'action': 'find',
+            'table': 'federation'
+        })).then(resp => {
+            setFederation(resp.data);
+            // console.log(branchState);
+        })
+        axios.post(app_config.host, qs.stringify({
+            'action': 'find',
+            'table': 'association'
+        })).then(resp => {
+            setAssociation(resp.data);
+            // console.log(branchState);
+        })
     }, [])
 
 
@@ -166,10 +217,10 @@ export default function MemberForm() {
                     <h1>Ajouter un nouveau membre</h1>
                 </div>
                 <div className="bottom">
-                    <div className="left">
+                    {/* <div className="left">
                         <img
                             src={file ? URL.createObjectURL(file) : "https://www.icon-library.com/images/no-image-icon/no-image-icon-0.jpg"} alt="" />
-                    </div>
+                    </div> */}
                     <div className="right">
                         <form>
                             <div className='top'>
@@ -331,18 +382,32 @@ export default function MemberForm() {
                             <div className="formInput">
                                 <label>Federation de base</label>
                                 <div>
-                                    <input type='text' readOnly placeholder='Nom' />
-                                    <input type='text' readOnly placeholder='Pesident' />
-                                    <input type='text' readOnly placeholder='Contact' />
+                                    <select name="fed" onChange={(e) => handleOtherInformationChange(e)}>
+                                        <option>Federation</option>
+                                        {
+                                            federation ? federation.map((item, index) =>
+                                                <option value={item.id} key={index}>{item.short_name}</option>
+                                            ) : 'Null'
+                                        }
+                                    </select>
+                                    <input type='text' value={fedPresi ? fedPresi.name : 'President'} readOnly placeholder='Pesident' />
+                                    <input type='text' value={fedPresi ? fedPresi.name : 'President'} readOnly placeholder='Contact' />
                                 </div>
 
                             </div>
                             <div className="formInput">
                                 <label>Association de base</label>
                                 <div>
-                                    <input type='text' readOnly placeholder='Nom' />
-                                    <input type='text' readOnly placeholder='Pesident' />
-                                    <input type='text' readOnly placeholder='Contact' />
+                                    <select name="asso" onChange={(e) => handleOtherInformationChange(e)}>
+                                        <option>Association</option>
+                                        {
+                                            association ? association.map((item, index) =>
+                                                <option value={item.id} key={index}>{item.name}</option>
+                                            ) : 'Null'
+                                        }
+                                    </select>
+                                    <input type='text' value={assoPresi ? assoPresi.name : 'President'} readOnly placeholder='Pesident' />
+                                    <input type='text' value={assoPresi ? assoPresi.contact : 'Contact'} readOnly placeholder='Contact' />
                                 </div>
                             </div>
 

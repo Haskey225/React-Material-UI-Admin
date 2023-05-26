@@ -10,7 +10,7 @@ import axios from 'axios';
 
 const qs = require('qs');
 function Datatable() {
-  const [data, setData] = useState(userRows);
+  const [data, setData] = useState([]);
 
   const handleDelete = (id) => {
     setData(data.filter((item) => item.id !== id));

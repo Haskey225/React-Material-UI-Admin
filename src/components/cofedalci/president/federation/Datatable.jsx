@@ -1,12 +1,11 @@
 import "./datatable.scss";
 import { DataGrid } from "@mui/x-data-grid";
-import { userColumns, userRows, GetBranch, branchColumns } from "../../../datatablesource";
+import { fedPresiColumn } from "../../../../datatablesource";
 import { Link } from "react-router-dom";
-import { useState, useContext, useEffect } from "react";
+import { useState, useEffect } from "react";
 
 import axios from 'axios';
-import { app_config } from "../../../config/app-config";
-
+import { app_config } from "../../../../config/app-config";
 
 const qs = require('qs');
 function Datatable() {
@@ -19,10 +18,11 @@ function Datatable() {
   useEffect(() => {
     axios.post(app_config.host, qs.stringify({
       'action': 'find',
-      'table': 'member'
+      'table': 'fedpresi'
     })).then(resp => {
       // console.log(resp.data)
       setData(resp.data)
+      // console.log(resp.data)
     })
   }, [])
 
@@ -49,22 +49,23 @@ function Datatable() {
     },
   ];
   return (
+   
     <div className="datatable">
-      <div className="datatableTitle">
-        Liste des membres
-        <Link to="/members/addMember" className="link">
-          Ajouter
-        </Link>
-      </div>
-      <DataGrid
-        className="datagrid"
-        rows={data}
-        columns={branchColumns.concat(actionColumn)}
-        pageSize={9}
-        rowsPerPageOptions={[9]}
-        checkboxSelection
-      />
+    <div className="datatableTitle">
+    Liste des president d'association
+      <Link to="/fedPresi/addFedPresi" className="link">
+        Ajouter
+      </Link>
     </div>
+    <DataGrid
+      className="datagrid"
+      rows={data}
+      columns={fedPresiColumn.concat(actionColumn)}
+      pageSize={9}
+      rowsPerPageOptions={[9]}
+      checkboxSelection
+    />
+  </div>
   );
 };
 

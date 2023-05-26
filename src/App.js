@@ -13,6 +13,8 @@ import Association from "./pages/cofedalci/association/association";
 import Members from "./pages/cofedalci/members/members";
 import Metiers from "./pages/cofedalci/metiers/metiers";
 import District from "./pages/cofedalci/district/district";
+import FederationPresi from "./pages/cofedalci/president/federation/federation";
+import AssociationPresi from "./pages/cofedalci/president/association/association";
 
 import {
   BrowserRouter,
@@ -25,6 +27,10 @@ import BranchForm from "./pages/cofedalci/branch/new/Forms";
 import FederationForm from "./pages/cofedalci/federation/new/addFed";
 import AssoForm from "./pages/cofedalci/association/new/addAsso";
 import MetierForm from "./pages/cofedalci/metiers/new/metier";
+
+//President Fed & Asso
+import FederationPresiForm from "./pages/cofedalci/president/federation/new/addFedPresi";
+import AssociationPresiForm from "./pages/cofedalci/president/association/new/addAssoPresi";
 
 
 
@@ -73,6 +79,16 @@ function App() {
               <Route index element={<Metiers />} />
               <Route path=":productId" element={<Single />} />
               <Route path="addMetiers" element={<MetierForm />} />
+            </Route>
+            <Route path="fedPresi">
+              <Route index element={<FederationPresi />} />
+              <Route path=":productId" element={<Single />} />
+              <Route path="addFedPresi" element={<FederationPresiForm />} />
+            </Route>
+            <Route path="assoPresi">
+              <Route index element={<AssociationPresi />} />
+              <Route path=":productId" element={<Single />} />
+              <Route path="addAssoPresi" element={<AssociationPresiForm />} />
             </Route>
             <Route path="district">
               <Route index element={<District />} />

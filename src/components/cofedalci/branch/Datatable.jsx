@@ -10,7 +10,7 @@ import { app_config } from "../../../config/app-config";
 
 const qs = require('qs');
 function Datatable() {
-  const [data, setData] = useState(null);
+  const [data, setData] = useState([]);
 
   const handleDelete = (id) => {
     setData(data.filter((item) => item.id !== id));

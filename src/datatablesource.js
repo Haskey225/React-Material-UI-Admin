@@ -193,6 +193,46 @@ export const userColumns = [
   },
 ];
 
+//president coloumn
+export const assoPresiColumn = [
+  { field: "id", headerName: "ID", width: 70 },
+  {
+    field: "name",
+    headerName: "Nom",
+    width: 100,
+  },
+  {
+    field: "contact",
+    headerName: "Contact",
+    width: 150,
+  },
+  {
+    field: "association_id",
+    headerName: "ID Association",
+    width: 200,
+  },
+
+];
+export const fedPresiColumn = [
+  { field: "id", headerName: "ID", width: 70 },
+  {
+    field: "name",
+    headerName: "Nom",
+    width: 100,
+  },
+  {
+    field: "contact",
+    headerName: "Contact",
+    width: 150,
+  },
+  {
+    field: "federation_id",
+    headerName: "ID Federation",
+    width: 200,
+  },
+
+];
+
 //temporary data
 export const userRows = [
   {
@@ -313,10 +353,32 @@ export const setFederation = (val) => {
   })
 
 }
+export const setFederationPresi = (val) => {
+  axios.post(app_config.host, qs.stringify({
+    'action': 'save',
+    'table': 'fedpresi',
+    'val': val
+  })).then(resp => {
+    // console.log(resp.data);
+    // return resp.data
+  })
+
+}
 export const setAssociation = (val) => {
   axios.post(app_config.host, qs.stringify({
     'action': 'save',
     'table': 'association',
+    'val': val
+  })).then(resp => {
+    // console.log(resp.data);
+    // return resp.data
+  })
+
+}
+export const setAssociationPresi = (val) => {
+  axios.post(app_config.host, qs.stringify({
+    'action': 'save',
+    'table': 'assopresi',
     'val': val
   })).then(resp => {
     // console.log(resp.data);

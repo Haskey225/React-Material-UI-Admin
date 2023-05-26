@@ -61,6 +61,21 @@ const Sidebar = () => {
               <span>Metiers</span>
             </li>
           </Link>
+
+          <p className="title">Presidents</p>
+          <Link to="/fedPresi" style={{ textDecoration: "none" }}>
+            <li>
+              <PersonOutlineOutlinedIcon className="icon" />
+              <span>Fed Presi</span>
+            </li>
+          </Link>
+          <Link to="/assoPresi" style={{ textDecoration: "none" }}>
+            <li>
+              <PersonOutlineOutlinedIcon className="icon" />
+              <span>Asso Presi</span>
+            </li>
+          </Link>
+
           <p className="title">Utilisateurs</p>
           <Link to="/members" style={{ textDecoration: "none" }}>
             <li>
