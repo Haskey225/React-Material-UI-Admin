@@ -12,9 +12,15 @@ import Federation from "./pages/cofedalci/federation/federation";
 import Association from "./pages/cofedalci/association/association";
 import Members from "./pages/cofedalci/members/members";
 import Metiers from "./pages/cofedalci/metiers/metiers";
-import District from "./pages/cofedalci/district/district";
 import FederationPresi from "./pages/cofedalci/president/federation/federation";
 import AssociationPresi from "./pages/cofedalci/president/association/association";
+
+//Location
+import District from "./pages/cofedalci/location/district/district";
+import Region from "./pages/cofedalci/location/region/region";
+import Department from "./pages/cofedalci/location/department/department";
+import Community from "./pages/cofedalci/location/community/community";
+import Area from "./pages/cofedalci/location/area/area";
 
 import {
   BrowserRouter,
@@ -27,6 +33,13 @@ import BranchForm from "./pages/cofedalci/branch/new/Forms";
 import FederationForm from "./pages/cofedalci/federation/new/addFed";
 import AssoForm from "./pages/cofedalci/association/new/addAsso";
 import MetierForm from "./pages/cofedalci/metiers/new/metier";
+
+//location form
+import DistrictForm from "./pages/cofedalci/location/district/new/addDistrict";
+import RegionForm from "./pages/cofedalci/location/region/new/addregion";
+import DepartmentForm from "./pages/cofedalci/location/department/new/addDepartment";
+import CommunityForm from "./pages/cofedalci/location/community/new/addCommunity";
+import AreaForm from "./pages/cofedalci/location/area/new/addArea";
 
 //President Fed & Asso
 import FederationPresiForm from "./pages/cofedalci/president/federation/new/addFedPresi";
@@ -68,7 +81,7 @@ function App() {
             <Route path="association">
               <Route index element={<Association />} />
               <Route path=":productId" element={<Single />} />
-              <Route path="addAsso" element={<AssoForm  />} />
+              <Route path="addAsso" element={<AssoForm />} />
             </Route>
             <Route path="members">
               <Route index element={<Members />} />
@@ -93,7 +106,27 @@ function App() {
             <Route path="district">
               <Route index element={<District />} />
               <Route path=":productId" element={<Single />} />
-              <Route path="addMetiers" element={<MetierForm />} />
+              <Route path="addDistrict" element={<DistrictForm />} />
+            </Route>
+            <Route path="region">
+              <Route index element={<Region />} />
+              <Route path=":productId" element={<Single />} />
+              <Route path="addRegion" element={<RegionForm />} />
+            </Route>
+            <Route path="department">
+              <Route index element={<Department />} />
+              <Route path=":productId" element={<Single />} />
+              <Route path="addDepartment" element={<DepartmentForm />} />
+            </Route>
+            <Route path="community">
+              <Route index element={<Community />} />
+              <Route path=":productId" element={<Single />} />
+              <Route path="addCommunity" element={<CommunityForm />} />
+            </Route>
+            <Route path="area">
+              <Route index element={<Area />} />
+              <Route path=":productId" element={<Single />} />
+              <Route path="addArea" element={<AreaForm />} />
             </Route>
           </Route>
         </Routes>

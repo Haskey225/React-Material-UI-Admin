@@ -1,13 +1,12 @@
 import "./datatable.scss";
 import { DataGrid } from "@mui/x-data-grid";
-import { userColumns, userRows, districtColumns } from "../../../datatablesource";
+import { regionColumn} from "../../../../datatablesource";
 import { Link } from "react-router-dom";
-import { useState, useContext, useEffect } from "react";
+import { useState, useEffect } from "react";
 
 import axios from 'axios';
+import { app_config } from "../../../../config/app-config";
 
-import { DarkModeContext } from "../../../context/darkModeContext";
-import { app_config } from "../../../config/app-config";
 
 const qs = require('qs');
 function Datatable() {
@@ -20,7 +19,7 @@ function Datatable() {
   useEffect(() => {
     axios.post(app_config.host, qs.stringify({
       'action': 'find',
-      'table': 'district'
+      'table': 'regions'
     })).then(resp => {
       // console.log(resp.data)
       setData(resp.data)
@@ -49,19 +48,18 @@ function Datatable() {
       },
     },
   ];
-  
   return (
     <div className="datatable">
       <div className="datatableTitle">
-      Liste des district
-        <Link to="/district/addDistrict" className="link">
+        Liste des régions
+        <Link to="/region/addRegion" className="link">
           Ajouter
         </Link>
       </div>
       <DataGrid
         className="datagrid"
         rows={data}
-        columns={districtColumns.concat(actionColumn)}
+        columns={regionColumn.concat(actionColumn)}
         pageSize={9}
         rowsPerPageOptions={[9]}
         checkboxSelection

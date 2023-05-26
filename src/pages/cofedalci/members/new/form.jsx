@@ -18,7 +18,8 @@ const initialMemberState = {
     'whatsapp': '',
     'email': '',
     'community_id': 0, //Activity form ID
-    'area_name': '' //Activity form ID
+    'area_name': '', //Activity form ID
+    'association_id': 0
 }
 
 const initialActivityState = {
@@ -151,7 +152,8 @@ export default function MemberForm() {
                 })
 
                 break;
-            case 'asso':
+            case 'association_id':
+                handleMemberState(e)
                 axios.post(app_config.host, qs.stringify({
                     'action': 'find',
                     'table': 'assopresiid',
@@ -171,6 +173,8 @@ export default function MemberForm() {
     //Sibmit form for member creation
     const submitForm = (e) => {
         e.preventDefault();
+        console.log(memberState);
+        console.log(activityState)
         setMember(memberState, activityState)
 
     }
@@ -229,7 +233,7 @@ export default function MemberForm() {
 
                             <div className="formInput">
                                 <label htmlFor="file">
-                                    Image : <DriveFolderUploadOutlined className="icon" />
+                                    Photo de profile : <DriveFolderUploadOutlined className="icon" />
                                 </label>
                                 <input
                                     type="file"
@@ -391,14 +395,14 @@ export default function MemberForm() {
                                         }
                                     </select>
                                     <input type='text' value={fedPresi ? fedPresi.name : 'President'} readOnly placeholder='Pesident' />
-                                    <input type='text' value={fedPresi ? fedPresi.name : 'President'} readOnly placeholder='Contact' />
+                                    <input type='text' value={fedPresi ? fedPresi.contact : 'President'} readOnly placeholder='Contact' />
                                 </div>
 
                             </div>
                             <div className="formInput">
                                 <label>Association de base</label>
                                 <div>
-                                    <select name="asso" onChange={(e) => handleOtherInformationChange(e)}>
+                                    <select name="association_id" onChange={(e) => handleOtherInformationChange(e)}>
                                         <option>Association</option>
                                         {
                                             association ? association.map((item, index) =>

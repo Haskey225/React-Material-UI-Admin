@@ -233,6 +233,64 @@ export const fedPresiColumn = [
 
 ];
 
+//Loaction column
+export const regionColumn = [
+  { field: "id", headerName: "ID", width: 70 },
+  {
+    field: "name",
+    headerName: "Nom",
+    width: 100,
+  },
+  {
+    field: "district_id",
+    headerName: "ID district",
+    width: 150,
+  },
+
+];
+export const departementColumn = [
+  { field: "id", headerName: "ID", width: 70 },
+  {
+    field: "name",
+    headerName: "Nom",
+    width: 100,
+  },
+  {
+    field: "region",
+    headerName: "ID Region",
+    width: 150,
+  },
+
+];
+export const communityColumn = [
+  { field: "id", headerName: "ID", width: 70 },
+  {
+    field: "name",
+    headerName: "Nom",
+    width: 100,
+  },
+  {
+    field: "department_id",
+    headerName: "ID Departement",
+    width: 150,
+  },
+
+];
+export const areaColumn = [
+  { field: "id", headerName: "ID", width: 70 },
+  {
+    field: "name",
+    headerName: "Nom",
+    width: 100,
+  },
+  {
+    field: "community_id",
+    headerName: "ID Commune",
+    width: 150,
+  },
+
+];
+
 //temporary data
 export const userRows = [
   {
@@ -392,18 +450,46 @@ export const setMetier = (val) => {
     'action': 'save',
     'table': 'metier',
     'val': val
-  })).then(resp=>{
+  })).then(resp => {
     //console.log(resp.data)
   })
 }
 
-export const setMember = (member, activity)=> {
+export const setMember = (member, activity) => {
   axios.post(app_config.host, qs.stringify({
-    'action':'save',
-    'table':'member',
-    'member':member,
-    'activity':activity
-  })).then(resp =>{
-    //console.log(resp.data)
+    'action': 'save',
+    'table': 'member',
+    'member': member,
+    'activity': activity
+  })).then(resp => {
+    console.log(resp.data)
+  })
+}
+
+export const setDepartment = (val) => {
+  axios.post(app_config.host, qs.stringify({
+    'action': 'save',
+    'table': 'department',
+    'val': val
+  })).then(resp => {
+    console.log(resp.data)
+  })
+}
+export const setCommunity = (val) => {
+  axios.post(app_config.host, qs.stringify({
+    'action': 'save',
+    'table': 'community',
+    'val': val
+  })).then(resp => {
+    console.log(resp.data)
+  })
+}
+export const setArea = (val) => {
+  axios.post(app_config.host, qs.stringify({
+    'action': 'save',
+    'table': 'area',
+    'val': val
+  })).then(resp => {
+    console.log(resp.data)
   })
 }
