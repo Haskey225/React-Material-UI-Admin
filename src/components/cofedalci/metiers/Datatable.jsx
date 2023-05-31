@@ -6,11 +6,13 @@ import { useState, useEffect } from "react";
 
 import axios from 'axios';
 import { app_config } from "../../../config/app-config";
+import Loading from "../../loading/Loading";
 
 
 const qs = require('qs');
 function Datatable() {
   const [data, setData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true)
 
   const handleDelete = (id) => {
     setData(data.filter((item) => item.id !== id));
@@ -23,6 +25,7 @@ function Datatable() {
     })).then(resp => {
       // console.log(resp.data)
       setData(resp.data)
+      setIsLoading(false)
     })
   }, [])
 
@@ -49,7 +52,7 @@ function Datatable() {
     },
   ];
   return (
-    <div className="datatable">
+    !isLoading ? (<div className="datatable">
       <div className="datatableTitle">
         Liste des corps de métiers
         <Link to="/metiers/addMetiers" className="link">
@@ -64,7 +67,8 @@ function Datatable() {
         rowsPerPageOptions={[9]}
         checkboxSelection
       />
-    </div>
+    </div>):
+    <Loading />
   );
 };
 

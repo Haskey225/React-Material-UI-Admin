@@ -1,5 +1,5 @@
 import "./widget.scss";
-import KeyboardArrowUp from "@mui/icons-material/KeyboardArrowUp";
+// import KeyboardArrowUp from "@mui/icons-material/KeyboardArrowUp";
 import PersonOutlineOutlined from "@mui/icons-material/PersonOutlineOutlined";
 import AccountBalanceWalletOutLinedIcon from "@mui/icons-material/AccountBalanceOutlined";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
@@ -14,7 +14,7 @@ const Widget = ({ type }) => {
     let data;
 
     // Temporary
-    const diff = 20;
+    // const diff = 20;
 
     useEffect(() => {
         axios.get(app_config.host_statistic).then(resp => {
@@ -100,13 +100,13 @@ const Widget = ({ type }) => {
                 <span className="counter">{data.isMoney ? "CFA" : null} {data.counts}</span>
                 <span className="link">{data.link}</span>
             </div>
-            <div className="right">
+            {/* <div className="right">
                 <div className="percentage positive">
                     <KeyboardArrowUp />
                     {diff} %
                 </div>
                 {data.icon}
-            </div>
+            </div> */}
 
         </div>
     );

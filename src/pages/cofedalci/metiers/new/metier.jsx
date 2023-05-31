@@ -11,16 +11,56 @@ const qs = require('qs')
 const initialState = {
   'name': '',
   'description': '',
-  'branch_id': 0
+  'branch_id': 0,
+  'association_id': 0
 }
 const MetierForm = () => {
 
   const [data, setData] = useState(initialState);
-  const [metierState, setMetierState] = useState(null)
+  const [branchState, setBranchState] = useState(null)
+  const [federationState, setFederationState] = useState(null)
+  const [associationState, setAssociationState] = useState(null)
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setData({ ...data, [name]: value })
+  }
+
+  const handleStateChange = (e) => {
+    const { name, value } = e.target;
+
+    switch (name) {
+      case 'branch_id':
+       handleChange(e) //If branch is selected, update set branch Datas
+       axios.post(app_config.host, qs.stringify({
+        'action': 'find',
+        'table': 'federation_br',
+        'id': value
+      })).then(resp => {
+        setFederationState(resp.data)
+        setAssociationState(null)
+      })
+        break;
+
+      case 'federation':
+        axios.post(app_config.host, qs.stringify({
+          'action': 'find',
+          'table': 'association_fed',
+          'id': value
+        })).then(resp => {
+          setAssociationState(resp.data)
+        })
+
+        break;
+      case 'association_id':
+       handleChange(e);
+      //  console.log(data)
+
+        break;
+
+      default:
+        break;
+    }
   }
   // const setBr = () => {
   //   console.log(GetBranch()['']);
@@ -42,7 +82,7 @@ const MetierForm = () => {
       'action': 'find',
       'table': 'branch'
     })).then(resp => {
-      setMetierState(resp.data)
+      setBranchState(resp.data)
     })
 
   }, [])
@@ -70,10 +110,32 @@ const MetierForm = () => {
               </div>
               <div className="formInput" >
                 <label>Branche</label>
-                <select onChange={(e) => handleChange(e)} name="branch_id">
+                <select onChange={(e) => handleStateChange(e)} name="branch_id">
                   <option>Selectionnez une branche</option>
                   {
-                    metierState && metierState.map((item, index) =>
+                    branchState && branchState.map((item, index) =>
+                      <option value={item.id} key={index}>{item.name} </option>
+                    )
+                  }
+                </select>
+              </div>
+              <div className="formInput" >
+                <label>Federation</label>
+                <select onChange={(e) => handleStateChange(e)} name="federation">
+                  <option>Selectionnez une Federation</option>
+                  {
+                    federationState && federationState.map((item, index) =>
+                      <option value={item.id} key={index}>{item.shirt_name} </option>
+                    )
+                  }
+                </select>
+              </div>
+              <div className="formInput" >
+                <label>Association</label>
+                <select onChange={(e) => handleStateChange(e)} name="association_id">
+                  <option>Selectionnez une association</option>
+                  {
+                    associationState && associationState.map((item, index) =>
                       <option value={item.id} key={index}>{item.name} </option>
                     )
                   }

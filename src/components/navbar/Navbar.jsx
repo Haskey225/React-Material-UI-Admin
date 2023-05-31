@@ -6,12 +6,13 @@ import FullScreenExitOutlinedIcon from "@mui/icons-material/FullscreenExitOutlin
 import NotificationsNoneOutlined from "@mui/icons-material/NotificationsNoneOutlined";
 import ChatBubbleOutlinedIcon from "@mui/icons-material/ChatBubbleOutlineOutlined";
 import ListOutLinedIcon from "@mui/icons-material/ListOutlined";
-import { useContext} from "react";
-import { DarkModeContext} from "../../context/darkModeContext";
+import { useContext } from "react";
+import { DarkModeContext } from "../../context/darkModeContext";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
 
-  const {dispatch} = useContext(DarkModeContext)
+  const { dispatch } = useContext(DarkModeContext)
 
   return (
     <div className="navbar">
@@ -23,27 +24,32 @@ const Navbar = () => {
         <div className="items">
           <div className="item">
             <LanguageOutlinedIcon className="icon" />
-            EN
+            <select>
+              <option>FR</option>
+              <option>EN</option>
+            </select>
           </div>
           <div className="item">
-            <DarkModeOutlined className="icon" onClick={() => dispatch({type:"TOGGLE"})}/>
+            <DarkModeOutlined className="icon" onClick={() => dispatch({ type: "TOGGLE" })} />
           </div>
           <div className="item">
             <FullScreenExitOutlinedIcon className="icon" />
           </div>
           <div className="item">
             <NotificationsNoneOutlined className="icon" />
-            <div className="counter">1</div>
+            <div className="counter">0</div>
           </div>
           <div className="item">
-            <ChatBubbleOutlinedIcon className="icon" />
-            <div className="counter">1</div>
+            <Link to={'/'}>
+              <ChatBubbleOutlinedIcon className="icon" />
+              <div className="counter">0</div>
+            </Link>
           </div>
           <div className="item">
             <ListOutLinedIcon className="icon" />
           </div>
           <div className="item">
-           <img src="https://cofedalci.org/wp-content/uploads/2023/04/cropped-logo512-1-e1682865273108.png" alt="" className="avatar"/>
+            <img src="https://cofedalci.org/wp-content/uploads/2023/04/cropped-logo512-1-e1682865273108.png" alt="" className="avatar" />
           </div>
         </div>
       </div>

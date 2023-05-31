@@ -3,6 +3,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import { branchColumns } from "../../../datatablesource";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
+import Loading from "../../loading/Loading";
 
 import axios from 'axios';
 
@@ -11,6 +12,7 @@ import { app_config } from "../../../config/app-config";
 const qs = require('qs');
 function Datatable() {
   const [data, setData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true)
 
   const handleDelete = (id) => {
     setData(data.filter((item) => item.id !== id));
@@ -23,6 +25,7 @@ function Datatable() {
     })).then(resp => {
       // console.log(resp.data)
       setData(resp.data)
+      setIsLoading(false)
     })
   }, [])
 
@@ -34,7 +37,7 @@ function Datatable() {
       renderCell: (params) => {
         return (
           <div className="cellAction">
-            <Link to="/users/test" style={{ textDecoration: "none" }}>
+            <Link to="/branch/test" style={{ textDecoration: "none" }}>
               <div className="viewButton">Voir</div>
             </Link>
             <div
@@ -49,14 +52,14 @@ function Datatable() {
     },
   ];
   return (
-    <div className="datatable">
+    !isLoading ? (<div className="datatable">
       <div className="datatableTitle">
-      Liste des branches
+        Liste des branches
         <Link to="/branch/addbranch" className="link">
           Ajouter
         </Link>
       </div>
-     {data ? <DataGrid
+      {data ? <DataGrid
         className="datagrid"
         rows={data}
         columns={branchColumns.concat(actionColumn)}
@@ -64,7 +67,7 @@ function Datatable() {
         rowsPerPageOptions={[9]}
         checkboxSelection
       /> : ''}
-    </div>
+    </div>) : <Loading />
   );
 };
 

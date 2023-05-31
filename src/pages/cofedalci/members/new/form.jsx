@@ -11,7 +11,7 @@ import { app_config } from "../../../../config/app-config";
 const qs = require('qs');
 const initialMemberState = {
     'name': '',
-    'birth_date': '10/10/1991',
+    'birth_date': '',
     'birth_place': '',
     'nationnality': '',
     'phone_number': '',
@@ -25,7 +25,7 @@ const initialMemberState = {
 const initialActivityState = {
     'metier_id': 0,
     'speciality': '',
-    'start_date': '10/10/2023',
+    'start_date': '',
     'min_month_ca': '',
     'max_month_ca': '',
     'min_month_customer': '',
@@ -43,19 +43,15 @@ export default function MemberForm() {
     const [memberState, setMemberState] = useState(initialMemberState);
     const [activityState, setActivityState] = useState(initialActivityState);
 
-    const [federation, setFederation] = useState(null)
-    const [association, setAssociation] = useState(null)
-
-    const [fedPresi, setFedPresi] = useState(null)
-    const [assoPresi, setAssoPresi] = useState(null);
-
     const [districtState, setDistrictState] = useState(null);
     const [regionState, setRegionState] = useState(null);
     const [departementState, setDepartementState] = useState(null);
     const [communityState, setCommunityState] = useState(null);
-    const [metierState, setMetierState] = useState(null)
 
     const [branchState, setBranchState] = useState(null);
+    const [federationState, setFederationState] = useState(null)
+    const [associationState, setAssociationState] = useState(null)
+    const [metierState, setMetierState] = useState(null)
 
     const handleMemberState = (e) => {
         const { name, value } = e.target;
@@ -123,45 +119,47 @@ export default function MemberForm() {
         }
     }
 
-    const handleBranchChange = (e) => {
-        const { value } = e.target;
-        //Ici on charge les corps de metiers en rapport avec la branch en passant l'id de la banche 
-        axios.post(app_config.host, qs.stringify({
-            'action': 'find',
-            'table': 'metier',
-            'branch_id': value
-        })).then(resp => {
-            setMetierState(resp.data);
-            console.log(metierState);
-        })
-    }
+    //handle activity change
 
-    //other information change
-    const handleOtherInformationChange = (e) => {
+    const handleActivityChange = (e) => {
         const { name, value } = e.target;
-        switch (name) {
-            case 'fed':
 
+        switch (name) {
+            case 'branch':
                 axios.post(app_config.host, qs.stringify({
                     'action': 'find',
-                    'table': 'fedpresiid',
+                    'table': 'fedbybranch',
                     'id': value
                 })).then(resp => {
-                    console.log(resp.data)
-                    setFedPresi(resp.data)
+                    setFederationState([])
+                    setFederationState(resp.data);
+                    setAssociationState([])
+                    // console.log(branchState);
                 })
 
                 break;
-            case 'association_id':
-                handleMemberState(e)
+            case 'fed':
                 axios.post(app_config.host, qs.stringify({
                     'action': 'find',
-                    'table': 'assopresiid',
+                    'table': 'assobyfed',
                     'id': value
                 })).then(resp => {
-                    console.log(resp.data)
-                    setAssoPresi(resp.data)
+                    setAssociationState(resp.data);
+                    // console.log(branchState);
                 })
+                break;
+            case 'association_id':
+                axios.post(app_config.host, qs.stringify({
+                    'action': 'find',
+                    'table': 'metiers_asso_id',
+                    'id': value
+                })).then(resp => {
+                    setMetierState(resp.data);
+                    console.log(resp.data);
+                })
+                
+                // handleBranchChange(e)
+                handleMemberState(e)
 
                 break;
 
@@ -170,11 +168,12 @@ export default function MemberForm() {
         }
     }
 
+
     //Sibmit form for member creation
     const submitForm = (e) => {
         e.preventDefault();
-        console.log(memberState);
-        console.log(activityState)
+        // console.log(memberState);
+        // console.log(activityState)
         setMember(memberState, activityState, file)
 
     }
@@ -194,20 +193,6 @@ export default function MemberForm() {
             setDistrictState(resp.data);
             // console.log(branchState);
         })
-        axios.post(app_config.host, qs.stringify({
-            'action': 'find',
-            'table': 'federation'
-        })).then(resp => {
-            setFederation(resp.data);
-            // console.log(branchState);
-        })
-        axios.post(app_config.host, qs.stringify({
-            'action': 'find',
-            'table': 'association'
-        })).then(resp => {
-            setAssociation(resp.data);
-            // console.log(branchState);
-        })
     }, [])
 
 
@@ -221,21 +206,19 @@ export default function MemberForm() {
                     <h1>Ajouter un nouveau membre</h1>
                 </div>
                 <div className="bottom">
-                    {/* <div className="left">
+                    <h2>Info sur le membre</h2>
+                    <div className="left">
                         <img
                             src={file ? URL.createObjectURL(file) : "https://www.icon-library.com/images/no-image-icon/no-image-icon-0.jpg"} alt="" />
-                    </div> */}
+                    </div>
                     <div className="right">
                         <form>
-                            <div className='top'>
-                                <h2>Info sur le membre</h2>
-                            </div>
 
                             <div className="formInput">
                                 <label htmlFor="file">
                                     Photo de profile : <DriveFolderUploadOutlined className="icon" />
                                 </label>
-                                <input
+                                <input require = 'require'
                                     type="file"
                                     id="file"
                                     onChange={e => setFile(e.target.files[0])}
@@ -245,38 +228,38 @@ export default function MemberForm() {
 
                             <div className="formInput">
                                 <label>Nom</label>
-                                <input type='text' name='name' onChange={(e) => handleMemberState(e)} placeholder='entrez votre nom complet' />
+                                <input require = 'require' type='text' name='name' onChange={(e) => handleMemberState(e)} placeholder='entrez votre nom complet' />
                             </div>
                             <div className="formInput">
                                 <label>Date de naissance</label>
-                                <input name='birth_date' onChange={(e) => handleMemberState(e)} type='date' placeholder='entrez votre date de naissance' />
+                                <input require = 'require' name='birth_date' onChange={(e) => handleMemberState(e)} type='date' placeholder='entrez votre date de naissance' />
                             </div>
                             <div className="formInput">
                                 <label>Lieux de naissance</label>
-                                <input name='birth_place' onChange={(e) => handleMemberState(e)} type='text' placeholder='entrez votre lieux de naissance' />
+                                <input require = 'require' name='birth_place' onChange={(e) => handleMemberState(e)} type='text' placeholder='entrez votre lieux de naissance' />
                             </div>
                             <div className="formInput">
                                 <label>Nationnalité</label>
-                                <input type='text' name='nationnality' onChange={(e) => handleMemberState(e)} placeholder='entrez votre Nationnalité' />
+                                <input require = 'require' type='text' name='nationnality' onChange={(e) => handleMemberState(e)} placeholder='entrez votre Nationnalité' />
                             </div>
                             <div className="formInput">
                                 <label>Telephone</label>
-                                <input type='tel' onChange={(e) => handleMemberState(e)} name='phone_number' placeholder='entrez votre numéro de tel' />
+                                <input require = 'require' type='tel' onChange={(e) => handleMemberState(e)} name='phone_number' placeholder='entrez votre numéro de tel' />
                             </div>
                             <div className="formInput">
                                 <label>Whatsapp</label>
-                                <input type='text' name='whatsapp' onChange={(e) => handleMemberState(e)} placeholder='entrez votre numero whatsapp' />
+                                <input require = 'require' type='text' name='whatsapp' onChange={(e) => handleMemberState(e)} placeholder='entrez votre numero whatsapp' />
                             </div>
                             <div className="formInput">
                                 <label>Email</label>
-                                <input type='email' name='email' onChange={(e) => handleMemberState(e)} placeholder='entrez votre adresse email' />
+                                <input require = 'require' type='email' name='email' onChange={(e) => handleMemberState(e)} placeholder='entrez votre adresse email' />
                             </div>
 
                             {/* Info sur lactivité */}
                             <h2>Information sur l activité</h2>
                             <div className="formInput">
                                 <label>Branche</label>
-                                <select onChange={(e) => handleBranchChange(e)}>
+                                <select name="branch" onChange={(e) => handleActivityChange(e)}>
                                     <option>Branche</option>
                                     {
                                         branchState && branchState.map((item, index) =>
@@ -284,6 +267,33 @@ export default function MemberForm() {
                                         )
                                     }
                                 </select>
+                            </div>
+                            <div className="formInput">
+                                <label>Federation de base</label>
+                                <div>
+                                    <select name="fed" onChange={(e) => handleActivityChange(e)}>
+                                        <option>Federation</option>
+                                        {
+                                            federationState ? federationState.map((item, index) =>
+                                                <option value={item.id} key={index}>{item.shirt_name}</option>
+                                            ) : 'Null'
+                                        }
+                                    </select>
+                                </div>
+
+                            </div>
+                            <div className="formInput">
+                                <label>Association de base</label>
+                                <div>
+                                    <select name="association_id" onChange={(e) => handleActivityChange(e)}>
+                                        <option>Association</option>
+                                        {
+                                            associationState ? associationState.map((item, index) =>
+                                                <option value={item.id} key={index}>{item.name}</option>
+                                            ) : 'Null'
+                                        }
+                                    </select>
+                                </div>
                             </div>
                             <div className="formInput">
                                 <label>Corps de métier</label>
@@ -296,39 +306,39 @@ export default function MemberForm() {
                             </div>
                             <div className="formInput">
                                 <label>Spécialité</label>
-                                <input name='speciality' type='text' placeholder='entrez votre spécialité' onChange={(e) => handleActivityState(e)} />
+                                <input require = 'require' name='speciality' type='text' placeholder='entrez votre spécialité' onChange={(e) => handleActivityState(e)} />
                             </div>
                             <div className="formInput">
                                 <label>Début d'activité</label>
-                                <input type='date' name='start_date' placeholder='entrez votre Nationnalité' onChange={(e) => handleActivityState(e)} />
+                                <input require = 'require' type='date' name='start_date' placeholder='entrez votre Nationnalité' onChange={(e) => handleActivityState(e)} />
                             </div>
                             <div className="formInput">
                                 <label>Estimation chiffre d'affaire par mois</label>
                                 <div className='forminterne'>
-                                    <input name='min_month_ca' type='numeric' placeholder='Montant minimum' onChange={(e) => handleActivityState(e)} />
-                                    <input name='max_month_ca' type='numeric' placeholder='Montant maximum' onChange={(e) => handleActivityState(e)} />
+                                    <input require = 'require' name='min_month_ca' type='numeric' placeholder='Montant moyen' onChange={(e) => handleActivityState(e)} />
+                                    {/* <input require = 'require' name='max_month_ca' type='numeric' placeholder='Montant maximum' onChange={(e) => handleActivityState(e)} /> */}
                                 </div>
                             </div>
                             <div className="formInput">
                                 <label>Estimation du nombre de client par mois</label>
                                 <div className='forminterne'>
-                                    <input name='min_month_customer' type='numeric' placeholder='Montant minimum' onChange={(e) => handleActivityState(e)} />
-                                    <input name='max_month_customer' type='numeric' placeholder='Montant maximum' onChange={(e) => handleActivityState(e)} />
+                                    <input require = 'require' name='min_month_customer' type='numeric' placeholder='Montant moyen' onChange={(e) => handleActivityState(e)} />
+                                    {/* <input require = 'require' name='max_month_customer' type='numeric' placeholder='Montant maximum' onChange={(e) => handleActivityState(e)} /> */}
                                 </div>
                             </div>
                             <div className="formInput">
                                 <label>Estimation du nombre d ouvrier ou salarier</label>
                                 <div className='forminterne'>
-                                    <input name='total_fix_worker' type='numeric' placeholder='Fixe' onChange={(e) => handleActivityState(e)} />
-                                    <input name='total_contract_worker' type='numeric' placeholder='Contractuel' onChange={(e) => handleActivityState(e)} />
-                                    <input name='total_familly_worker' type='numeric' placeholder='Aide familialle' onChange={(e) => handleActivityState(e)} />
-                                    <input name='total_intern_worker' type='numeric' placeholder='Stagiare' onChange={(e) => handleActivityState(e)} />
+                                    <input require = 'require' name='total_fix_worker' type='numeric' placeholder='Fixe' onChange={(e) => handleActivityState(e)} />
+                                    <input require = 'require' name='total_contract_worker' type='numeric' placeholder='Contractuel' onChange={(e) => handleActivityState(e)} />
+                                    <input require = 'require' name='total_familly_worker' type='numeric' placeholder='Aide familialle' onChange={(e) => handleActivityState(e)} />
+                                    <input require = 'require' name='total_intern_worker' type='numeric' placeholder='Stagiare' onChange={(e) => handleActivityState(e)} />
                                 </div>
                             </div>
 
                             <h2>Info sur la localité</h2>
                             <div className="formInput">
-                                <label>District</label>
+                                <label >District
                                 <select name='district' onChange={(e) => handleLocationChange(e)}>
                                     <option>{districtState ? 'Selectionnez votre district' : 'Aucun element trouve'} </option>
                                     {
@@ -337,9 +347,10 @@ export default function MemberForm() {
                                         )
                                     }
                                 </select>
+                                </label>
                             </div>
                             <div className="formInput">
-                                <label>Region</label>
+                                <label>Region
                                 <select name='region' onChange={(e => handleLocationChange(e))}>
                                     <option>
                                         {regionState ? 'Selectionnez votre Region' : '(Aucun) veuillez selectionnez un district'}
@@ -350,9 +361,10 @@ export default function MemberForm() {
                                         )
                                     }
                                 </select>
+                                </label>
                             </div>
                             <div className="formInput">
-                                <label>Departement</label>
+                                <label>Departement
                                 <select name='department' onChange={(e) => handleLocationChange(e)}>
                                     <option>
                                         {departementState ? 'Selectionnez votre departement' : '(Aucun) veuillez selectionnez une region'}
@@ -363,9 +375,10 @@ export default function MemberForm() {
                                         )
                                     }
                                 </select>
+                                </label>
                             </div>
                             <div className="formInput">
-                                <label>Commune</label>
+                                <label>Commune
                                 <select name='community_id' onChange={(e) => handleMemberState(e)}>
                                     <option>
                                         {communityState ? 'Selectionnez votre commune' : '(Aucun) veuillez selectionnez un departement'}
@@ -376,44 +389,19 @@ export default function MemberForm() {
                                         )
                                     }
                                 </select>
+                                </label>
                             </div>
                             <div className="formInput">
                                 <label>Quatier/Village</label>
-                                <input name="area_name" onChange={(e) => handleMemberState(e)} type='text' placeholder='entrez votre le nom de votre quartier' />
+                                <input require = 'require' name="area_name" onChange={(e) => handleMemberState(e)} type='text' placeholder='entrez votre le nom de votre quartier' />
                             </div>
 
                             <h2>Autre information</h2>
                             <div className="formInput">
-                                <label>Federation de base</label>
-                                <div>
-                                    <select name="fed" onChange={(e) => handleOtherInformationChange(e)}>
-                                        <option>Federation</option>
-                                        {
-                                            federation ? federation.map((item, index) =>
-                                                <option value={item.id} key={index}>{item.short_name}</option>
-                                            ) : 'Null'
-                                        }
-                                    </select>
-                                    <input type='text' value={fedPresi ? fedPresi.name : 'President'} readOnly placeholder='Pesident' />
-                                    <input type='text' value={fedPresi ? fedPresi.contact : 'President'} readOnly placeholder='Contact' />
-                                </div>
+                                <label>Parlez nous un peux de vous <p>{'(Optionnel)'} </p></label>
+                                <textarea require = 'require' name="area_name" onChange={(e) => handleMemberState(e)} type='text' placeholder='Optionnel' style={{height: '200px', width:'100%'}} ></textarea>
+                            </div>
 
-                            </div>
-                            <div className="formInput">
-                                <label>Association de base</label>
-                                <div>
-                                    <select name="association_id" onChange={(e) => handleOtherInformationChange(e)}>
-                                        <option>Association</option>
-                                        {
-                                            association ? association.map((item, index) =>
-                                                <option value={item.id} key={index}>{item.name}</option>
-                                            ) : 'Null'
-                                        }
-                                    </select>
-                                    <input type='text' value={assoPresi ? assoPresi.name : 'President'} readOnly placeholder='Pesident' />
-                                    <input type='text' value={assoPresi ? assoPresi.contact : 'Contact'} readOnly placeholder='Contact' />
-                                </div>
-                            </div>
 
                             <button onClick={(e) => submitForm(e)}>Enregistrer</button>
                         </form>

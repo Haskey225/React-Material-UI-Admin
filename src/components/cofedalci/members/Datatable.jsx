@@ -6,15 +6,18 @@ import { useState, useEffect } from "react";
 
 import axios from 'axios';
 import { app_config } from "../../../config/app-config";
+import Loading from "../../loading/Loading";
 
 
 const qs = require('qs');
 function Datatable() {
   const [data, setData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true)
 
   const handleDelete = (id) => {
     setData(data.filter((item) => item.id !== id));
   };
+
 
   useEffect(() => {
     axios.post(app_config.host, qs.stringify({
@@ -23,6 +26,7 @@ function Datatable() {
     })).then(resp => {
       // console.log(resp.data)
       setData(resp.data)
+      setIsLoading(false)
     })
   }, [])
 
@@ -34,8 +38,8 @@ function Datatable() {
       renderCell: (params) => {
         return (
           <div className="cellAction">
-            <Link to="/users/test" style={{ textDecoration: "none" }}>
-              <div className="viewButton">Voir</div>
+            <Link to="/members/test?dada=toi" style={{ textDecoration: "none" }}>
+              <div className="viewButton">Détails</div>
             </Link>
             <div
               className="deleteButton"
@@ -49,7 +53,7 @@ function Datatable() {
     },
   ];
   return (
-    <div className="datatable">
+    !isLoading ? (<div className="datatable">
       <div className="datatableTitle">
         Liste des membres
         <Link to="/members/addMember" className="link">
@@ -64,7 +68,8 @@ function Datatable() {
         rowsPerPageOptions={[9]}
         checkboxSelection
       />
-    </div>
+    </div>) :
+      <Loading />
   );
 };
 

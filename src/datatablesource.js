@@ -7,13 +7,13 @@ export const branchColumns = [
   {
     field: "name",
     headerName: "name",
-    width: 150,
+    width: 400,
   },
 
   {
     field: "description",
     headerName: "description",
-    width: 400,
+    width: 300,
   },
 ];
 export const federationColumns = [
@@ -21,22 +21,22 @@ export const federationColumns = [
   {
     field: "short_name",
     headerName: "nom abrégé",
-    width: 150,
+    width: 200,
   },
   {
     field: "full_name",
     headerName: "nom developpé",
-    width: 150,
+    width: 200,
   },
   {
     field: "description",
     headerName: "description",
-    width: 400,
+    width: 200,
   },
   {
     field: "branch_id",
     headerName: "ID de banch",
-    width: 150,
+    width: 100,
   },
 
 ];
@@ -45,23 +45,23 @@ export const associationColumns = [
   {
     field: "name",
     headerName: "name",
-    width: 100,
+    width: 300,
   },
 
   {
     field: "description",
     headerName: "description",
-    width: 200,
+    width: 300,
   },
   {
     field: "federation_id",
     headerName: "ID fedeation",
-    width: 120,
+    width: 100,
   },
   {
     field: "location_id",
     headerName: "ID Lieux",
-    width: 120,
+    width: 80,
   },
 ];
 export const metierColumns = [
@@ -69,17 +69,17 @@ export const metierColumns = [
   {
     field: "name",
     headerName: "name",
-    width: 100,
+    width: 300,
   },
 
   {
     field: "description",
     headerName: "description",
-    width: 200,
+    width: 300,
   },
   {
-    field: "branch_id",
-    headerName: "ID Branch",
+    field: "association_id",
+    headerName: "ID Association",
     width: 100,
   },
 ];
@@ -88,13 +88,13 @@ export const districtColumns = [
   {
     field: "name",
     headerName: "name",
-    width: 150,
+    width: 300,
   },
 
   {
     field: "iso_3",
     headerName: "ISO-3 du pays",
-    width: 70,
+    width: 100,
   },
 ];
 export const regionColumns = [
@@ -102,13 +102,13 @@ export const regionColumns = [
   {
     field: "name",
     headerName: "name",
-    width: 150,
+    width: 300,
   },
 
   {
     field: "district_id",
     headerName: "ID District",
-    width: 70,
+    width: 100,
   },
 ];
 export const departmentColumns = [
@@ -116,13 +116,13 @@ export const departmentColumns = [
   {
     field: "name",
     headerName: "name",
-    width: 150,
+    width: 300,
   },
 
   {
     field: "region_id",
     headerName: "ID de Region",
-    width: 70,
+    width: 100,
   },
 ];
 export const communityColumns = [
@@ -130,13 +130,13 @@ export const communityColumns = [
   {
     field: "name",
     headerName: "name",
-    width: 150,
+    width: 300,
   },
 
   {
     field: "department_id",
     headerName: "ID de Departement",
-    width: 70,
+    width: 100,
   },
 ];
 export const areaColumns = [
@@ -144,13 +144,13 @@ export const areaColumns = [
   {
     field: "name",
     headerName: "name",
-    width: 150,
+    width: 300,
   },
 
   {
     field: "community_id",
     headerName: "ID de la Commune",
-    width: 70,
+    width: 100,
   },
 ];
 export const userColumns = [
@@ -208,15 +208,20 @@ export const memberColumn = [
     },
   },
   {
+    field: "name",
+    headerName: "Nom",
+    width: 300,
+  },
+  {
     field: "phone_number",
     headerName: "Numero",
-    width: 100,
+    width: 150,
   },
 
   {
     field: "email",
     headerName: "Email",
-    width: 100,
+    width: 250,
   },
 ];
 
@@ -226,7 +231,7 @@ export const assoPresiColumn = [
   {
     field: "name",
     headerName: "Nom",
-    width: 100,
+    width: 450,
   },
   {
     field: "contact",
@@ -236,7 +241,7 @@ export const assoPresiColumn = [
   {
     field: "association_id",
     headerName: "ID Association",
-    width: 200,
+    width: 150,
   },
 
 ];
@@ -245,7 +250,7 @@ export const fedPresiColumn = [
   {
     field: "name",
     headerName: "Nom",
-    width: 100,
+    width: 450,
   },
   {
     field: "contact",
@@ -255,7 +260,7 @@ export const fedPresiColumn = [
   {
     field: "federation_id",
     headerName: "ID Federation",
-    width: 200,
+    width: 150,
   },
 
 ];
@@ -266,7 +271,7 @@ export const regionColumn = [
   {
     field: "name",
     headerName: "Nom",
-    width: 100,
+    width: 300,
   },
   {
     field: "district_id",
@@ -280,7 +285,7 @@ export const departementColumn = [
   {
     field: "name",
     headerName: "Nom",
-    width: 100,
+    width: 300,
   },
   {
     field: "region",
@@ -294,7 +299,7 @@ export const communityColumn = [
   {
     field: "name",
     headerName: "Nom",
-    width: 100,
+    width: 300,
   },
   {
     field: "department_id",
@@ -308,7 +313,7 @@ export const areaColumn = [
   {
     field: "name",
     headerName: "Nom",
-    width: 100,
+    width: 300,
   },
   {
     field: "community_id",
@@ -482,12 +487,13 @@ export const setMetier = (val) => {
   })
 }
 
-export const setMember = (member, activity) => {
+export const setMember = (member, activity, file) => {
   axios.post(app_config.host, qs.stringify({
     'action': 'save',
     'table': 'member',
     'member': member,
-    'activity': activity
+    'activity': activity,
+    'file': file
   })).then(resp => {
     console.log(resp.data)
   })

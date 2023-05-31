@@ -11,6 +11,7 @@
              padding : 10px;
              margin: 20px;
              display: flex;
+             flex-direction: column;
 
              h1{
                 color: lightgray;
@@ -37,10 +38,11 @@
                     flex-direction: column;
                     // flex-wrap: wrap;
                     gap: 25px;
-                    justify-content: space-around;
+                    // border: 1px solid green;
+                    // justify-content: space-around;
 
                     .formInput{
-                        width: 90%;
+                        width: '100%';
                         align-items: center;
 
                         label{
@@ -54,8 +56,7 @@
                         }
 
                         input, select{
-                            width:100%;
-                            padding: 5px;
+                            width:'100%';
                             border: none;
                             border-bottom: 1px solid gray;
                         }

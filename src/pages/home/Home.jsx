@@ -16,7 +16,13 @@ const Home = () => {
       <div className="homeContainer">
         <Navbar />
         <div className="widgets">
-          <Widget type="member"/>
+          <Widget type="member" />
+          <Widget type="association" />
+          <Widget type="federation" />
+          <Widget type="branch" />
+        </div>
+        <div className="widgets">
+          <Widget type="member" />
           <Widget type="association" />
           <Widget type="federation" />
           <Widget type="branch" />
