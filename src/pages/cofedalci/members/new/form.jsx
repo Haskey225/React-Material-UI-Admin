@@ -33,7 +33,8 @@ const initialActivityState = {
     'total_fix_worker': 0,
     'total_contract_worker': 0,
     'total_familly_worker': 0,
-    'total_intern_worker': 0
+    'total_intern_worker': 0,
+    'total_worker': 0
 }
 
 export default function MemberForm() {

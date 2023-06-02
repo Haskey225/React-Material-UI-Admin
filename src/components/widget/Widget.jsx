@@ -9,23 +9,40 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { app_config } from "../../config/app-config";
 
+const qs = require('qs')
+
 const Widget = ({ type }) => {
     const [count, setCount] = useState(null)
+    const [finance, setFinance]=useState(null)
     let data;
 
     // Temporary
     // const diff = 20;
+    //Definition de constatant :
+    //capa -> chiffre d'affaire monsuel par artisan
+    //capg -> Chiffre d'affaire global
+    //mopa -> main d'oeuvre par artisan
+    //mog -> maind'oeuvre global
 
     useEffect(() => {
-        axios.get(app_config.host_statistic).then(resp => {
+        axios.post(app_config.host_statistic, qs.stringify({
+            'action':'organisme'
+        })).then(resp => {
             setCount(resp.data)
+            // console.log(resp.data)
         })
-    })
+        axios.post(app_config.host_statistic, qs.stringify({
+            'action':'finance'
+        })).then(resp => {
+            setFinance(resp.data)
+            // console.log(resp.data)
+        })
+    }, [])
 
     switch (type) {
         case "member":
             data = {
-                title: "Membres",
+                title: "Nombre de membre total",
                 isMoney: false,
                 link: (
                     <Link to="/members">Voir tous les membres</Link>),
@@ -43,7 +60,7 @@ const Widget = ({ type }) => {
             break;
         case "association":
             data = {
-                title: "Association",
+                title: "Nombre d'association",
                 isMoney: false,
                 link: (<Link to="/association">Voir les associations</Link>),
                 icon: (
@@ -59,7 +76,7 @@ const Widget = ({ type }) => {
             break;
         case "federation":
             data = {
-                title: "Federations",
+                title: "Nombre de federation",
                 isMoney: false,
                 link: (<Link to="/federation">Voir les federations</Link>),
                 icon: (
@@ -75,7 +92,7 @@ const Widget = ({ type }) => {
             break;
         case "branch":
             data = {
-                title: "Branche",
+                title: "Nombre de branche",
                 isMoney: false,
                 link: (<Link to="/branch">Voir les branches</Link>),
                 icon: (
@@ -89,15 +106,98 @@ const Widget = ({ type }) => {
                 counts: count ? count.branch : '0'
             };
             break;
+        case "capa":
+            data = {
+                title: "Chiffe d'affaire par artisan monsuel",
+                isMoney: true,
+                link: (<Link to="/">Voir les détails</Link>),
+                icon: (
+                    <AccountBalanceWalletOutLinedIcon className="icon"
+                        style={{
+                            color: "purple",
+                            backgroundColor: " rgba(128,0,128,0.2)",
+                        }}
+                    />
+                ),
+                counts: count ? count.branch : '0'
+            };
+            break;
+        case "capg":
+            data = {
+                title: "Chiffre d'affaire mensuel",
+                isMoney: true,
+                link: (<Link to="/">Voir les détails</Link>),
+                icon: (
+                    <AccountBalanceWalletOutLinedIcon className="icon"
+                        style={{
+                            color: "purple",
+                            backgroundColor: " rgba(128,0,128,0.2)",
+                        }}
+                    />
+                ),
+                counts: finance ? finance.min_month_ca : '0'
+            };
+            break;
+        case "mopa":
+            data = {
+                title: "Emploi créer par artisan",
+                isMoney: false,
+                link: (<Link to="/">Voir les détails</Link>),
+                icon: (
+                    <AccountBalanceWalletOutLinedIcon className="icon"
+                        style={{
+                            color: "purple",
+                            backgroundColor: " rgba(128,0,128,0.2)",
+                        }}
+                    />
+                ),
+                counts: count ? count.branch : '0'
+            };
+            break;
+        case "mog":
+            data = {
+                title: "Nombre total d'emploi créés",
+                isMoney: false,
+                link: (<Link to="/">Voir les détails</Link>),
+                icon: (
+                    <AccountBalanceWalletOutLinedIcon className="icon"
+                        style={{
+                            color: "purple",
+                            backgroundColor: " rgba(128,0,128,0.2)",
+                        }}
+                    />
+                ),
+                counts: finance ? finance.total_woker : '0',
+                // style: {
+                //     background: '#c1c1c1'
+                // }
+            };
+            break;
+        case "mcustomer":
+            data = {
+                title: "Nombre de consommateur mensuel",
+                isMoney: false,
+                link: (<Link to="/">Voir les détails</Link>),
+                icon: (
+                    <AccountBalanceWalletOutLinedIcon className="icon"
+                        style={{
+                            color: "purple",
+                            backgroundColor: " rgba(128,0,128,0.2)",
+                        }}
+                    />
+                ),
+                counts: finance ? finance.min_month_customer : '0'
+            };
+            break;
         default:
             break;
     }
 
     return (
-        <div className="widget">
+        <div className="widget" style={data.style && data.style }>
             <div className="left">
                 <span className="title">{data.title}</span>
-                <span className="counter">{data.isMoney ? "CFA" : null} {data.counts}</span>
+                <span className="counter">{data.counts} {data.isMoney ? "XOF" : null}</span>
                 <span className="link">{data.link}</span>
             </div>
             {/* <div className="right">
