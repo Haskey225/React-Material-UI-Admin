@@ -49,83 +49,89 @@ import AssociationPresiForm from "./pages/cofedalci/president/association/new/ad
 
 function App() {
 
-  const { darkMode } = useContext(DarkModeContext)
+  const { darkMode, isLogged } = useContext(DarkModeContext)
 
   return (
     <div className={darkMode ? "app dark" : "app"}>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/">
-            <Route path="/" element={<Home />} />
-            <Route path="login" element={<Login />} />
-            <Route path="products">
-              <Route index element={<List />} />
-              <Route path=":productId" element={<Single />} />
-              <Route path="new" element={<New inputs={productInputs} title="Add New Product" />} />
+      {isLogged ?
+        <BrowserRouter>
+          <Routes>
+            <Route path="/">
+              <Route path="/" element={<Home />} />
+              <Route path="products">
+                <Route index element={<List />} />
+                <Route path=":productId" element={<Single />} />
+                <Route path="new" element={<New inputs={productInputs} title="Add New Product" />} />
+              </Route>
+              <Route path="branch">
+                <Route index element={<Branch />} />
+                <Route path=":productId" element={<Single />} />
+                <Route path="addbranch" element={<BranchForm />} />
+              </Route>
+              <Route path="federation">
+                <Route index element={<Federation />} />
+                <Route path=":productId" element={<Single />} />
+                <Route path="addfederation" element={<FederationForm />} />
+              </Route>
+              <Route path="association">
+                <Route index element={<Association />} />
+                <Route path=":productId" element={<Single />} />
+                <Route path="addAsso" element={<AssoForm />} />
+              </Route>
+              <Route path="members">
+                <Route index element={<Members />} />
+                <Route path=":productId" element={<Single />} />
+                <Route path="addMember" element={<MemberForm />} />
+              </Route>
+              <Route path="metiers">
+                <Route index element={<Metiers />} />
+                <Route path=":productId" element={<Single />} />
+                <Route path="addMetiers" element={<MetierForm />} />
+              </Route>
+              <Route path="fedPresi">
+                <Route index element={<FederationPresi />} />
+                <Route path=":productId" element={<Single />} />
+                <Route path="addFedPresi" element={<FederationPresiForm />} />
+              </Route>
+              <Route path="assoPresi">
+                <Route index element={<AssociationPresi />} />
+                <Route path=":productId" element={<Single />} />
+                <Route path="addAssoPresi" element={<AssociationPresiForm />} />
+              </Route>
+              <Route path="district">
+                <Route index element={<District />} />
+                <Route path=":productId" element={<Single />} />
+                <Route path="addDistrict" element={<DistrictForm />} />
+              </Route>
+              <Route path="region">
+                <Route index element={<Region />} />
+                <Route path=":productId" element={<Single />} />
+                <Route path="addRegion" element={<RegionForm />} />
+              </Route>
+              <Route path="department">
+                <Route index element={<Department />} />
+                <Route path=":productId" element={<Single />} />
+                <Route path="addDepartment" element={<DepartmentForm />} />
+              </Route>
+              <Route path="community">
+                <Route index element={<Community />} />
+                <Route path=":productId" element={<Single />} />
+                <Route path="addCommunity" element={<CommunityForm />} />
+              </Route>
+              <Route path="area">
+                <Route index element={<Area />} />
+                <Route path=":productId" element={<Single />} />
+                <Route path="addArea" element={<AreaForm />} />
+              </Route>
             </Route>
-            <Route path="branch">
-              <Route index element={<Branch />} />
-              <Route path=":productId" element={<Single />} />
-              <Route path="addbranch" element={<BranchForm />} />
-            </Route>
-            <Route path="federation">
-              <Route index element={<Federation />} />
-              <Route path=":productId" element={<Single />} />
-              <Route path="addfederation" element={<FederationForm />} />
-            </Route>
-            <Route path="association">
-              <Route index element={<Association />} />
-              <Route path=":productId" element={<Single />} />
-              <Route path="addAsso" element={<AssoForm />} />
-            </Route>
-            <Route path="members">
-              <Route index element={<Members />} />
-              <Route path=":productId" element={<Single />} />
-              <Route path="addMember" element={<MemberForm />} />
-            </Route>
-            <Route path="metiers">
-              <Route index element={<Metiers />} />
-              <Route path=":productId" element={<Single />} />
-              <Route path="addMetiers" element={<MetierForm />} />
-            </Route>
-            <Route path="fedPresi">
-              <Route index element={<FederationPresi />} />
-              <Route path=":productId" element={<Single />} />
-              <Route path="addFedPresi" element={<FederationPresiForm />} />
-            </Route>
-            <Route path="assoPresi">
-              <Route index element={<AssociationPresi />} />
-              <Route path=":productId" element={<Single />} />
-              <Route path="addAssoPresi" element={<AssociationPresiForm />} />
-            </Route>
-            <Route path="district">
-              <Route index element={<District />} />
-              <Route path=":productId" element={<Single />} />
-              <Route path="addDistrict" element={<DistrictForm />} />
-            </Route>
-            <Route path="region">
-              <Route index element={<Region />} />
-              <Route path=":productId" element={<Single />} />
-              <Route path="addRegion" element={<RegionForm />} />
-            </Route>
-            <Route path="department">
-              <Route index element={<Department />} />
-              <Route path=":productId" element={<Single />} />
-              <Route path="addDepartment" element={<DepartmentForm />} />
-            </Route>
-            <Route path="community">
-              <Route index element={<Community />} />
-              <Route path=":productId" element={<Single />} />
-              <Route path="addCommunity" element={<CommunityForm />} />
-            </Route>
-            <Route path="area">
-              <Route index element={<Area />} />
-              <Route path=":productId" element={<Single />} />
-              <Route path="addArea" element={<AreaForm />} />
-            </Route>
-          </Route>
-        </Routes>
-      </BrowserRouter>
+          </Routes>
+        </BrowserRouter>
+        :
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Login />} />
+          </Routes>
+        </BrowserRouter>}
     </div>
   );
 }
