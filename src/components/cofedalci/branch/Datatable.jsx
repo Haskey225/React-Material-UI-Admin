@@ -13,12 +13,22 @@ const qs = require('qs');
 function Datatable() {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true)
+  const [showModal, setShowModal] = useState(false)
+  const [modalData, setModalData] = useState([])
 
   const handleDelete = (id) => {
-    setData(data.filter((item) => item.id !== id));
+    // setData(data.filter((item) => item.id !== id));
   };
 
+  const toggleModal = async (item) => {
+    setModalData(item)
+    // console.log(modalData)
+    setShowModal(!showModal)
+
+  }
+
   useEffect(() => {
+
     axios.post(app_config.host, qs.stringify({
       'action': 'find',
       'table': 'branch'
@@ -27,7 +37,10 @@ function Datatable() {
       setData(resp.data)
       setIsLoading(false)
     })
+
+
   }, [])
+
 
   const actionColumn = [
     {
@@ -37,9 +50,16 @@ function Datatable() {
       renderCell: (params) => {
         return (
           <div className="cellAction">
-            <Link to="/branch/test" style={{ textDecoration: "none" }}>
+            <button className="viewButton" onClick={() => toggleModal(params.row)}>Voir</button>
+            {/* <Link to="/branch/test" style={{ textDecoration: "none" }}>
               <div className="viewButton">Voir</div>
-            </Link>
+            </Link> */}
+            <div
+              className="deleteButton"
+              onClick={() => handleDelete(params.row.id)}
+            >
+              Modifier
+            </div>
             <div
               className="deleteButton"
               onClick={() => handleDelete(params.row.id)}
@@ -52,22 +72,39 @@ function Datatable() {
     },
   ];
   return (
-    !isLoading ? (<div className="datatable">
-      <div className="datatableTitle">
-        Liste des branches
-        <Link to="/branch/addbranch" className="link">
-          Ajouter
-        </Link>
+    !isLoading ? (
+      <div className="datatable">
+        <div className="datatableTitle">
+          Liste des branches
+          <Link to="/branch/addbranch" className="link">
+            Ajouter
+          </Link>
+        </div>
+        {data ? <DataGrid
+          className="datagrid"
+          rows={data}
+          columns={branchColumns.concat(actionColumn)}
+          pageSize={9}
+          rowsPerPageOptions={[9]}
+          checkboxSelection
+        /> : ''}
+
+        {showModal &&
+          <div className="modal" >
+            <div className="modal-container">
+              <div className="close">
+                <button onClick={() => toggleModal()}>x</button>
+              </div>
+              <div className="contente">
+                <div className="header"> La branche <strong>{modalData.name} </strong></div>
+
+              </div>
+            </div>
+          </div>
+        }
       </div>
-      {data ? <DataGrid
-        className="datagrid"
-        rows={data}
-        columns={branchColumns.concat(actionColumn)}
-        pageSize={9}
-        rowsPerPageOptions={[9]}
-        checkboxSelection
-      /> : ''}
-    </div>) : <Loading />
+
+    ) : <Loading />
   );
 };
 

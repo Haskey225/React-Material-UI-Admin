@@ -10,6 +10,7 @@ import "./home.scss"
 const Home = () => {
 
 
+
   return (
     <div className="home">
       <Sidebar />
@@ -28,7 +29,7 @@ const Home = () => {
         </div>
         <div className="charts">
           <Featured />
-          <Chart title="Flux d'inscription des membres" aspect={2 / 1} />
+          <Chart title="Flux d'inscription des membres" aspect={3 / 1} />
         </div>
         {/* <div className="listContainer">
           <div className="listTitle">Nouveau membres</div>

@@ -8,12 +8,13 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { app_config } from "../../config/app-config";
+import { FormatNumber } from "../../function/data";
 
 const qs = require('qs')
 
 const Widget = ({ type }) => {
     const [count, setCount] = useState(null)
-    const [finance, setFinance]=useState(null)
+    const [finance, setFinance] = useState(null)
     let data;
 
     // Temporary
@@ -26,13 +27,13 @@ const Widget = ({ type }) => {
 
     useEffect(() => {
         axios.post(app_config.host_statistic, qs.stringify({
-            'action':'organisme'
+            'action': 'organisme'
         })).then(resp => {
             setCount(resp.data)
             // console.log(resp.data)
         })
         axios.post(app_config.host_statistic, qs.stringify({
-            'action':'finance'
+            'action': 'finance'
         })).then(resp => {
             setFinance(resp.data)
             // console.log(resp.data)
@@ -55,7 +56,7 @@ const Widget = ({ type }) => {
                         }}
                     />
                 ),
-                counts: count ? count.members : '0'
+                counts: count ? FormatNumber(count.members) : '0'
             };
             break;
         case "association":
@@ -71,7 +72,7 @@ const Widget = ({ type }) => {
                         }}
                     />
                 ),
-                counts: count ? count.association : '0'
+                counts: count ? FormatNumber(count.association) : '0'
             };
             break;
         case "federation":
@@ -87,7 +88,7 @@ const Widget = ({ type }) => {
                         }}
                     />
                 ),
-                counts: count ? count.federation : '0'
+                counts: count ? FormatNumber(count.federation) : '0'
             };
             break;
         case "branch":
@@ -103,7 +104,7 @@ const Widget = ({ type }) => {
                         }}
                     />
                 ),
-                counts: count ? count.branch : '0'
+                counts: count ? FormatNumber(count.branch) : '0'
             };
             break;
         case "capa":
@@ -119,7 +120,7 @@ const Widget = ({ type }) => {
                         }}
                     />
                 ),
-                counts: count ? count.branch : '0'
+                counts: count ? FormatNumber(count.branch) : '0'
             };
             break;
         case "capg":
@@ -135,7 +136,7 @@ const Widget = ({ type }) => {
                         }}
                     />
                 ),
-                counts: finance ? finance.min_month_ca : '0'
+                counts: finance ? FormatNumber(finance.min_month_ca) : '0'
             };
             break;
         case "mopa":
@@ -151,7 +152,7 @@ const Widget = ({ type }) => {
                         }}
                     />
                 ),
-                counts: count ? count.branch : '0'
+                counts: count ? FormatNumber(count.branch) : '0'
             };
             break;
         case "mog":
@@ -167,7 +168,7 @@ const Widget = ({ type }) => {
                         }}
                     />
                 ),
-                counts: finance ? finance.total_woker : '0',
+                counts: finance ? FormatNumber(finance.total_woker) : '0',
                 // style: {
                 //     background: '#c1c1c1'
                 // }
@@ -186,7 +187,7 @@ const Widget = ({ type }) => {
                         }}
                     />
                 ),
-                counts: finance ? finance.min_month_customer : '0'
+                counts: finance ? FormatNumber(finance.min_month_customer) : '0'
             };
             break;
         default:
@@ -194,7 +195,7 @@ const Widget = ({ type }) => {
     }
 
     return (
-        <div className="widget" style={data.style && data.style }>
+        <div className="widget" style={data.style && data.style}>
             <div className="left">
                 <span className="title">{data.title}</span>
                 <span className="counter">{data.counts} {data.isMoney ? "XOF" : null}</span>
