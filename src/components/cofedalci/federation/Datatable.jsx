@@ -8,14 +8,22 @@ import axios from 'axios';
 import { app_config } from "../../../config/app-config";
 import Loading from "../../loading/Loading";
 
+import CustomWidgets from "../widgets/widgets";
+
 const qs = require('qs');
 function Datatable() {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true)
+  const [showModal, setShowModal] = useState(false)
+  const [modalData, setModalData] = useState([])
 
   const handleDelete = (id) => {
     setData(data.filter((item) => item.id !== id));
   };
+  const toggleModal = (item) => {
+    setModalData(item)
+    setShowModal(!showModal);
+  }
 
   useEffect(() => {
     axios.post(app_config.host, qs.stringify({
@@ -36,9 +44,7 @@ function Datatable() {
       renderCell: (params) => {
         return (
           <div className="cellAction">
-            <Link to="/federation/test" style={{ textDecoration: "none" }}>
-              <div className="viewButton">Voir</div>
-            </Link>
+            <button className="viewButton" onClick={() => toggleModal(params.row)}>Voir</button>
             <div
               className="deleteButton"
               onClick={() => handleDelete(params.row.id)}
@@ -53,7 +59,7 @@ function Datatable() {
   return (
     !isLoading ? (<div className="datatable">
       <div className="datatableTitle">
-      Liste des des fédérations
+        Liste des des fédérations
         <Link to="/federation/addfederation" className="link">
           Ajouter
         </Link>
@@ -63,11 +69,12 @@ function Datatable() {
         rows={data}
         columns={federationColumns.concat(actionColumn)}
         pageSize={9}
-        rowsPerPageOptions={[9]}
-        checkboxSelection
+        rowsPerPageOptions={[20]}
+        
       />
-    </div>):
-    <Loading />
+      <CustomWidgets title={'Federation'} show={showModal} data={modalData} />
+    </div>) :
+      <Loading />
   );
 };
 

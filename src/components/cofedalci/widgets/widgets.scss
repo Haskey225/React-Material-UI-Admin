@@ -1,0 +1,42 @@
+.modal{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: #0000003a;
+
+    .modal-container{
+        border: 1px solid white;
+        background-color: white;
+        width: 70%;
+        height: 60%;
+
+        .close{
+            display: flex;
+            justify-content: right;
+
+            button{
+                background-color: rgb(4, 85, 4);
+                color: white;
+                line-height: 1ch;
+                padding: 5px;
+                border-radius: 50%;
+                font-weight: bold;
+
+            }
+        }
+
+        .contente{
+            margin: 0 10px;
+            .header{
+                justify-content: center;
+                text-align: center;
+
+            }
+        }
+    }
+}

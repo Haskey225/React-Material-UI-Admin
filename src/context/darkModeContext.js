@@ -11,6 +11,7 @@ export const DarkModeContext = createContext(INITIAL_STATE)
 export const DarkModeContextProvider = ({ children }) => {
     const [state, dispatch] = useReducer(DarkModeReducer, INITIAL_STATE);
     const [isLogged, setIsLogged] = useState(false)
+    const [shownModal, setShownModal]= useState(false);
 
 
     return (
@@ -18,7 +19,9 @@ export const DarkModeContextProvider = ({ children }) => {
             darkMode: state.darkMode,
             dispatch,
             setIsLogged,
-            isLogged
+            isLogged,
+            setShownModal,
+            shownModal
 
         }}>
             {children}

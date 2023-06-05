@@ -19,7 +19,7 @@ const initialMemberState = {
     'email': '',
     'community_id': 0, //Activity form ID
     'area_name': '', //Activity form ID
-    'association_id': 0
+    'association_id': 0    
 }
 
 const initialActivityState = {
@@ -175,6 +175,7 @@ export default function MemberForm() {
         e.preventDefault();
         // console.log(memberState);
         // console.log(activityState)
+        // console.log(file)
         setMember(memberState, activityState, file)
 
     }
@@ -224,6 +225,7 @@ export default function MemberForm() {
                                     id="file"
                                     onChange={e => setFile(e.target.files[0])}
                                     style={{ display: "none" }}
+                                    name="file"
                                 />
                             </div>
 

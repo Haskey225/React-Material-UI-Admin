@@ -65,7 +65,6 @@ function Datatable() {
         columns={associationColumns.concat(actionColumn)}
         pageSize={9}
         rowsPerPageOptions={[9]}
-        checkboxSelection
       />
     </div>) :
       <Loading />

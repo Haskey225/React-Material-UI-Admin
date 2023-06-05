@@ -63,7 +63,6 @@ function Datatable() {
         columns={districtColumns.concat(actionColumn)}
         pageSize={9}
         rowsPerPageOptions={[9]}
-        checkboxSelection
       />
     </div>
   );

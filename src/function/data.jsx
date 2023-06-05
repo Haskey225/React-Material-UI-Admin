@@ -116,3 +116,18 @@ export const GetMember = () => {
         console.log(resp.data)
     })
 }
+
+
+//Statistic fonction
+
+export const getFederationByBranch = async (br_id) => {
+    let data = axios.post(app_config.host_statistic, qs.stringify({
+        'action': 'fededation_by_branch',
+        'id': br_id
+    })).then(resp => {
+        // console.log(resp.data)
+        data = resp.data;
+    });
+
+    return data;
+}

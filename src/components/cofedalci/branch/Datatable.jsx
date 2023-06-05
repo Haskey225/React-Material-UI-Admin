@@ -8,23 +8,37 @@ import Loading from "../../loading/Loading";
 import axios from 'axios';
 
 import { app_config } from "../../../config/app-config";
+import { getFederationByBranch } from "../../../function/data";
 
 const qs = require('qs');
+
 function Datatable() {
+
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true)
   const [showModal, setShowModal] = useState(false)
   const [modalData, setModalData] = useState([])
+  const [fedNumber, setFedNumber] = useState('Rien');
 
   const handleDelete = (id) => {
     // setData(data.filter((item) => item.id !== id));
   };
 
   const toggleModal = async (item) => {
-    setModalData(item)
-    // console.log(modalData)
-    setShowModal(!showModal)
+    if (item) {
+      setModalData(item)
+      // console.log(getFederationByBranch(item.id))
+      axios.post(app_config.host_statistic, qs.stringify({
+        'action': 'fededation_by_branch',
+        'id': item.id
+      })).then(resp => {
+        // console.log(resp.data)
+        setFedNumber(resp.data.federation);
+      });
+      // setFedNumber(getFederationByBranch(item.id))
 
+    }
+    setShowModal(!showModal)
   }
 
   useEffect(() => {
@@ -86,7 +100,6 @@ function Datatable() {
           columns={branchColumns.concat(actionColumn)}
           pageSize={9}
           rowsPerPageOptions={[9]}
-          checkboxSelection
         /> : ''}
 
         {showModal &&
@@ -96,8 +109,17 @@ function Datatable() {
                 <button onClick={() => toggleModal()}>x</button>
               </div>
               <div className="contente">
-                <div className="header"> La branche <strong>{modalData.name} </strong></div>
-
+                <div className="header"><h2> La branche <strong>{modalData.name} </strong></h2></div>
+                <div className="body">
+                  <div className="description">
+                    <h4>Description</h4>
+                    <p> {modalData.description} </p>
+                  </div>
+                  <div className="description">
+                    <h4>Nombre de federation fille</h4>
+                    <p> {fedNumber} </p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

@@ -87,8 +87,8 @@
         position: absolute;
         top: 0;
         left: 0;
-        height: 100%;
-        width: 100%;
+        height: 100vh;
+        width: 100vw;
         background-color: #0000003a;
 
         .modal-container{
@@ -113,11 +113,14 @@
             }
 
             .contente{
-                margin: 0 10px;
+                margin: 0 30px;
                 .header{
                     justify-content: center;
                     text-align: center;
 
+                }
+                .body{
+                    margin-top: 20px;
                 }
             }
         }

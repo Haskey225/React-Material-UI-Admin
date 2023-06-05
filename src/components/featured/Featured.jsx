@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { app_config } from "../../config/app-config";
 import { KeyboardArrowDown } from "@mui/icons-material";
+import { FormatNumber } from "../../function/data";
 // import { Tooltip } from "@mui/material";
 // import { Tooltip } from "recharts";
 
@@ -52,14 +53,14 @@ const Featured = () => {
             <div className="itemTitle" >Restant</div>
             <div className="itemResult positive">
               <KeyboardArrowUpOutlined fontSize="small" />
-              <div className="resultAmount">{parseInt((100000-memberNumber)/1000) + ' ' +((100000-memberNumber)%1000)} </div>
+              <div className="resultAmount">{FormatNumber(target - memberNumber)} </div>
             </div>
           </div>
           <div className="item">
             <div className="itemTitle">Performamce</div>
             <div className="itemResult negative">
               <KeyboardArrowDown fontSize="small" />
-              <div className="resultAmount">{parseInt((memberNumber/(695*5))*100)} %</div>
+              <div className="resultAmount">{parseInt((memberNumber / (695 * 5)) * 100)} %</div>
             </div>
           </div>
         </div>
