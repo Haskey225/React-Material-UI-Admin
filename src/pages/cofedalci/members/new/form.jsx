@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { setMember } from "../../../../datatablesource";
 import { app_config } from "../../../../config/app-config";
+import { Alert, Snackbar } from "@mui/material"
 
 
 const qs = require('qs');
@@ -19,7 +20,7 @@ const initialMemberState = {
     'email': '',
     'community_id': 0, //Activity form ID
     'area_name': '', //Activity form ID
-    'association_id': 0    
+    'association_id': 0
 }
 
 const initialActivityState = {
@@ -53,6 +54,17 @@ export default function MemberForm() {
     const [federationState, setFederationState] = useState(null)
     const [associationState, setAssociationState] = useState(null)
     const [metierState, setMetierState] = useState(null)
+//Snack bar code
+    const [open, setOpen] = useState(false)
+
+    const onClose = () => {
+      setOpen(false)
+    }
+  
+    const handleClick = () => {
+      setOpen(true)
+    }
+    //end Snack bar
 
     const handleMemberState = (e) => {
         const { name, value } = e.target;
@@ -158,7 +170,7 @@ export default function MemberForm() {
                     setMetierState(resp.data);
                     console.log(resp.data);
                 })
-                
+
                 // handleBranchChange(e)
                 handleMemberState(e)
 
@@ -177,7 +189,7 @@ export default function MemberForm() {
         // console.log(activityState)
         // console.log(file)
         setMember(memberState, activityState, file)
-
+        handleClick()
     }
 
     useEffect(() => {
@@ -207,6 +219,12 @@ export default function MemberForm() {
                 <div className="top">
                     <h1>Ajouter un nouveau membre</h1>
                 </div>
+                <Snackbar
+                    open={open}
+                    autoHideDuration={2000}
+                    message={<Alert severity="error">Ok</Alert>}
+                    onClose={onClose}
+                />
                 <div className="bottom">
                     <h2>Info sur le membre</h2>
                     <div className="left">
@@ -220,7 +238,7 @@ export default function MemberForm() {
                                 <label htmlFor="file">
                                     Photo de profile : <DriveFolderUploadOutlined className="icon" />
                                 </label>
-                                <input require = 'require'
+                                <input require='require'
                                     type="file"
                                     id="file"
                                     onChange={e => setFile(e.target.files[0])}
@@ -231,31 +249,31 @@ export default function MemberForm() {
 
                             <div className="formInput">
                                 <label>Nom</label>
-                                <input require = 'require' type='text' name='name' onChange={(e) => handleMemberState(e)} placeholder='entrez votre nom complet' />
+                                <input require='require' type='text' name='name' onChange={(e) => handleMemberState(e)} placeholder='entrez votre nom complet' />
                             </div>
                             <div className="formInput">
                                 <label>Date de naissance</label>
-                                <input require = 'require' name='birth_date' onChange={(e) => handleMemberState(e)} type='date' placeholder='entrez votre date de naissance' />
+                                <input require='require' name='birth_date' onChange={(e) => handleMemberState(e)} type='date' placeholder='entrez votre date de naissance' />
                             </div>
                             <div className="formInput">
                                 <label>Lieux de naissance</label>
-                                <input require = 'require' name='birth_place' onChange={(e) => handleMemberState(e)} type='text' placeholder='entrez votre lieux de naissance' />
+                                <input require='require' name='birth_place' onChange={(e) => handleMemberState(e)} type='text' placeholder='entrez votre lieux de naissance' />
                             </div>
                             <div className="formInput">
                                 <label>Nationnalité</label>
-                                <input require = 'require' type='text' name='nationnality' onChange={(e) => handleMemberState(e)} placeholder='entrez votre Nationnalité' />
+                                <input require='require' type='text' name='nationnality' onChange={(e) => handleMemberState(e)} placeholder='entrez votre Nationnalité' />
                             </div>
                             <div className="formInput">
                                 <label>Telephone</label>
-                                <input require = 'require' type='tel' onChange={(e) => handleMemberState(e)} name='phone_number' placeholder='entrez votre numéro de tel' />
+                                <input require='require' type='tel' onChange={(e) => handleMemberState(e)} name='phone_number' placeholder='entrez votre numéro de tel' />
                             </div>
                             <div className="formInput">
                                 <label>Whatsapp</label>
-                                <input require = 'require' type='text' name='whatsapp' onChange={(e) => handleMemberState(e)} placeholder='entrez votre numero whatsapp' />
+                                <input require='require' type='text' name='whatsapp' onChange={(e) => handleMemberState(e)} placeholder='entrez votre numero whatsapp' />
                             </div>
                             <div className="formInput">
                                 <label>Email</label>
-                                <input require = 'require' type='email' name='email' onChange={(e) => handleMemberState(e)} placeholder='entrez votre adresse email' />
+                                <input require='require' type='email' name='email' onChange={(e) => handleMemberState(e)} placeholder='entrez votre adresse email' />
                             </div>
 
                             {/* Info sur lactivité */}
@@ -309,100 +327,100 @@ export default function MemberForm() {
                             </div>
                             <div className="formInput">
                                 <label>Spécialité</label>
-                                <input require = 'require' name='speciality' type='text' placeholder='entrez votre spécialité' onChange={(e) => handleActivityState(e)} />
+                                <input require='require' name='speciality' type='text' placeholder='entrez votre spécialité' onChange={(e) => handleActivityState(e)} />
                             </div>
                             <div className="formInput">
                                 <label>Début d'activité</label>
-                                <input require = 'require' type='date' name='start_date' placeholder='entrez votre Nationnalité' onChange={(e) => handleActivityState(e)} />
+                                <input require='require' type='date' name='start_date' placeholder='entrez votre Nationnalité' onChange={(e) => handleActivityState(e)} />
                             </div>
                             <div className="formInput">
                                 <label>Estimation chiffre d'affaire par mois</label>
                                 <div className='forminterne'>
-                                    <input require = 'require' name='min_month_ca' type='numeric' placeholder='Montant moyen' onChange={(e) => handleActivityState(e)} />
+                                    <input require='require' name='min_month_ca' type='numeric' placeholder='Montant moyen' onChange={(e) => handleActivityState(e)} />
                                     {/* <input require = 'require' name='max_month_ca' type='numeric' placeholder='Montant maximum' onChange={(e) => handleActivityState(e)} /> */}
                                 </div>
                             </div>
                             <div className="formInput">
                                 <label>Estimation du nombre de client par mois</label>
                                 <div className='forminterne'>
-                                    <input require = 'require' name='min_month_customer' type='numeric' placeholder='Montant moyen' onChange={(e) => handleActivityState(e)} />
+                                    <input require='require' name='min_month_customer' type='numeric' placeholder='Montant moyen' onChange={(e) => handleActivityState(e)} />
                                     {/* <input require = 'require' name='max_month_customer' type='numeric' placeholder='Montant maximum' onChange={(e) => handleActivityState(e)} /> */}
                                 </div>
                             </div>
                             <div className="formInput">
                                 <label>Estimation du nombre d ouvrier ou salarier</label>
                                 <div className='forminterne'>
-                                    <input require = 'require' name='total_fix_worker' type='numeric' placeholder='Fixe' onChange={(e) => handleActivityState(e)} />
-                                    <input require = 'require' name='total_contract_worker' type='numeric' placeholder='Contractuel' onChange={(e) => handleActivityState(e)} />
-                                    <input require = 'require' name='total_familly_worker' type='numeric' placeholder='Aide familialle' onChange={(e) => handleActivityState(e)} />
-                                    <input require = 'require' name='total_intern_worker' type='numeric' placeholder='Stagiare' onChange={(e) => handleActivityState(e)} />
+                                    <input require='require' name='total_fix_worker' type='numeric' placeholder='Fixe' onChange={(e) => handleActivityState(e)} />
+                                    <input require='require' name='total_contract_worker' type='numeric' placeholder='Contractuel' onChange={(e) => handleActivityState(e)} />
+                                    <input require='require' name='total_familly_worker' type='numeric' placeholder='Aide familialle' onChange={(e) => handleActivityState(e)} />
+                                    <input require='require' name='total_intern_worker' type='numeric' placeholder='Stagiare' onChange={(e) => handleActivityState(e)} />
                                 </div>
                             </div>
 
                             <h2>Info sur la localité</h2>
                             <div className="formInput">
                                 <label >District
-                                <select name='district' onChange={(e) => handleLocationChange(e)}>
-                                    <option>{districtState ? 'Selectionnez votre district' : 'Aucun element trouve'} </option>
-                                    {
-                                        districtState && districtState.map((item, index) =>
-                                            <option key={index} value={item.id}>{item.name}</option>
-                                        )
-                                    }
-                                </select>
+                                    <select name='district' onChange={(e) => handleLocationChange(e)}>
+                                        <option>{districtState ? 'Selectionnez votre district' : 'Aucun element trouve'} </option>
+                                        {
+                                            districtState && districtState.map((item, index) =>
+                                                <option key={index} value={item.id}>{item.name}</option>
+                                            )
+                                        }
+                                    </select>
                                 </label>
                             </div>
                             <div className="formInput">
                                 <label>Region
-                                <select name='region' onChange={(e => handleLocationChange(e))}>
-                                    <option>
-                                        {regionState ? 'Selectionnez votre Region' : '(Aucun) veuillez selectionnez un district'}
-                                    </option>
-                                    {
-                                        regionState && regionState.map((item, index) =>
-                                            <option key={index} value={item.id}>{item.name}</option>
-                                        )
-                                    }
-                                </select>
+                                    <select name='region' onChange={(e => handleLocationChange(e))}>
+                                        <option>
+                                            {regionState ? 'Selectionnez votre Region' : '(Aucun) veuillez selectionnez un district'}
+                                        </option>
+                                        {
+                                            regionState && regionState.map((item, index) =>
+                                                <option key={index} value={item.id}>{item.name}</option>
+                                            )
+                                        }
+                                    </select>
                                 </label>
                             </div>
                             <div className="formInput">
                                 <label>Departement
-                                <select name='department' onChange={(e) => handleLocationChange(e)}>
-                                    <option>
-                                        {departementState ? 'Selectionnez votre departement' : '(Aucun) veuillez selectionnez une region'}
-                                    </option>
-                                    {
-                                        departementState && departementState.map((item, index) =>
-                                            <option key={index} value={item.id}>{item.name}</option>
-                                        )
-                                    }
-                                </select>
+                                    <select name='department' onChange={(e) => handleLocationChange(e)}>
+                                        <option>
+                                            {departementState ? 'Selectionnez votre departement' : '(Aucun) veuillez selectionnez une region'}
+                                        </option>
+                                        {
+                                            departementState && departementState.map((item, index) =>
+                                                <option key={index} value={item.id}>{item.name}</option>
+                                            )
+                                        }
+                                    </select>
                                 </label>
                             </div>
                             <div className="formInput">
                                 <label>Commune
-                                <select name='community_id' onChange={(e) => handleMemberState(e)}>
-                                    <option>
-                                        {communityState ? 'Selectionnez votre commune' : '(Aucun) veuillez selectionnez un departement'}
-                                    </option>
-                                    {
-                                        communityState && communityState.map((item, index) =>
-                                            <option key={index} value={item.id}>{item.name}</option>
-                                        )
-                                    }
-                                </select>
+                                    <select name='community_id' onChange={(e) => handleMemberState(e)}>
+                                        <option>
+                                            {communityState ? 'Selectionnez votre commune' : '(Aucun) veuillez selectionnez un departement'}
+                                        </option>
+                                        {
+                                            communityState && communityState.map((item, index) =>
+                                                <option key={index} value={item.id}>{item.name}</option>
+                                            )
+                                        }
+                                    </select>
                                 </label>
                             </div>
                             <div className="formInput">
                                 <label>Quatier/Village</label>
-                                <input require = 'require' name="area_name" onChange={(e) => handleMemberState(e)} type='text' placeholder='entrez votre le nom de votre quartier' />
+                                <input require='require' name="area_name" onChange={(e) => handleMemberState(e)} type='text' placeholder='entrez votre le nom de votre quartier' />
                             </div>
 
                             <h2>Autre information</h2>
                             <div className="formInput">
                                 <label>Parlez nous un peux de vous <p>{'(Optionnel)'} </p></label>
-                                <textarea require = 'require' name="area_name" onChange={(e) => handleMemberState(e)} type='text' placeholder='Optionnel' style={{height: '200px', width:'100%'}} ></textarea>
+                                <textarea require='require' name="area_name" onChange={(e) => handleMemberState(e)} type='text' placeholder='Optionnel' style={{ height: '200px', width: '100%' }} ></textarea>
                             </div>
 
 

@@ -37,24 +37,24 @@ function Datatable() {
   }, [])
 
   const actionColumn = [
-    {
-      field: "action",
-      headerName: "Action",
-      width: 200,
-      renderCell: (params) => {
-        return (
-          <div className="cellAction">
-            <button className="viewButton" onClick={() => toggleModal(params.row)}>Voir</button>
-            <div
-              className="deleteButton"
-              onClick={() => handleDelete(params.row.id)}
-            >
-              Supprimer
-            </div>
-          </div>
-        );
-      },
-    },
+    // {
+    //   field: "action",
+    //   headerName: "Action",
+    //   width: 200,
+    //   renderCell: (params) => {
+    //     return (
+    //       <div className="cellAction">
+    //         <button className="viewButton" onClick={() => toggleModal(params.row)}>Voir</button>
+    //         <div
+    //           className="deleteButton"
+    //           onClick={() => handleDelete(params.row.id)}
+    //         >
+    //           Supprimer
+    //         </div>
+    //       </div>
+    //     );
+    //   },
+    // },
   ];
   return (
     !isLoading ? (<div className="datatable">

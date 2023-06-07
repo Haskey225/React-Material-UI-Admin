@@ -17,18 +17,18 @@ function Datatable() {
   const { setShownModal } = useContext(DarkModeContext)
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true)
-  const [modalItem, setModalItem] = useState(null)
+  const [modalItem, setModalItem] = useState(24)
 
   const onDetails = (item) => {
-    if (item) {
-      setModalItem(item)
-    }
+    setModalItem(item)
+    // console.log(item)
+    // console.log(modalItem)
     setShownModal(true)
   }
 
-  const handleDelete = (id) => {
-    setData(data.filter((item) => item.id !== id));
-  };
+  // const handleDelete = (id) => {
+  //   setData(data.filter((item) => item.id !== id));
+  // };
 
 
   useEffect(() => {
@@ -42,6 +42,8 @@ function Datatable() {
     })
   }, [])
 
+
+
   const actionColumn = [
     {
       field: "action",
@@ -50,13 +52,13 @@ function Datatable() {
       renderCell: (params) => {
         return (
           <div className="cellAction">
-            <button className="viewButton" onClick={() => onDetails(params.row)}>Détails</button>
-            <div
+            <button className="viewButton" onClick={() => onDetails(params.row.id)}>Détails</button>
+            {/* <div
               className="deleteButton"
               onClick={() => handleDelete(params.row.id)}
             >
               Supprimer
-            </div>
+            </div> */}
           </div>
         );
       },
@@ -76,11 +78,12 @@ function Datatable() {
             className="datagrid"
             rows={data}
             columns={memberColumn.concat(actionColumn)}
-            pageSize={9}
+            // pageSize={25}
             rowsPerPageOptions={[9]}
-            checkboxSelection
+            // paginationMode="server"
+            // checkboxSelection // Desable check box
           />
-          <Details item={modalItem} />
+          <Details id={modalItem} />
         </div>
       )
       :

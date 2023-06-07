@@ -57,33 +57,33 @@ function Datatable() {
 
 
   const actionColumn = [
-    {
-      field: "action",
-      headerName: "Action",
-      width: 200,
-      renderCell: (params) => {
-        return (
-          <div className="cellAction">
-            <button className="viewButton" onClick={() => toggleModal(params.row)}>Voir</button>
-            {/* <Link to="/branch/test" style={{ textDecoration: "none" }}>
-              <div className="viewButton">Voir</div>
-            </Link> */}
-            <div
-              className="deleteButton"
-              onClick={() => handleDelete(params.row.id)}
-            >
-              Modifier
-            </div>
-            <div
-              className="deleteButton"
-              onClick={() => handleDelete(params.row.id)}
-            >
-              Supprimer
-            </div>
-          </div>
-        );
-      },
-    },
+    // {
+    //   field: "action",
+    //   headerName: "Action",
+    //   width: 200,
+    //   renderCell: (params) => {
+    //     return (
+    //       <div className="cellAction">
+    //         <button className="viewButton" onClick={() => toggleModal(params.row)}>Voir</button>
+    //         {/* <Link to="/branch/test" style={{ textDecoration: "none" }}>
+    //           <div className="viewButton">Voir</div>
+    //         </Link> */}
+    //         <div
+    //           className="deleteButton"
+    //           onClick={() => handleDelete(params.row.id)}
+    //         >
+    //           Modifier
+    //         </div>
+    //         <div
+    //           className="deleteButton"
+    //           onClick={() => handleDelete(params.row.id)}
+    //         >
+    //           Supprimer
+    //         </div>
+    //       </div>
+    //     );
+    //   },
+    // },
   ];
   return (
     !isLoading ? (

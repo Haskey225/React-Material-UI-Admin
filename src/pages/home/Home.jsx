@@ -7,12 +7,14 @@ import Chart from "../../components/chart/Chart"
 import "./home.scss"
 
 
+
 const Home = () => {
 
-
+ 
 
   return (
     <div className="home">
+      
       <Sidebar />
       <div className="homeContainer">
         <Navbar />

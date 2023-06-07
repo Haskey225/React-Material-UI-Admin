@@ -10,6 +10,7 @@ import StoreIcon from '@mui/icons-material/Store';
 // import PsychologyOutlinedIcon from '@mui/icons-material/PsychologyOutlined';
 // import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 // import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
+import { MyLocationOutlined } from "@mui/icons-material";
 import InputOutlinedIcon from '@mui/icons-material/InputOutlined';
 import { Link } from "react-router-dom";
 
@@ -84,31 +85,31 @@ const Sidebar = () => {
           <p className="title">Localité</p>
           <Link to="/district" style={{ textDecoration: "none" }}>
             <li>
-              <PersonOutlineOutlinedIcon className="icon" />
+              <MyLocationOutlined className="icon" />
               <span>District</span>
             </li>
           </Link>
           <Link to="/region" style={{ textDecoration: "none" }}>
             <li>
-              <PersonOutlineOutlinedIcon className="icon" />
+              <MyLocationOutlined className="icon" />
               <span>Region</span>
             </li>
           </Link>
           <Link to="/department" style={{ textDecoration: "none" }}>
             <li>
-              <PersonOutlineOutlinedIcon className="icon" />
+              <MyLocationOutlined className="icon" />
               <span>Departement</span>
             </li>
           </Link>
           <Link to="/community" style={{ textDecoration: "none" }}>
             <li>
-              <PersonOutlineOutlinedIcon className="icon" />
+              <MyLocationOutlined className="icon" />
               <span>Commune</span>
             </li>
           </Link>
           <Link to="/area" style={{ textDecoration: "none" }}>
             <li>
-              <PersonOutlineOutlinedIcon className="icon" />
+              <MyLocationOutlined className="icon" />
               <span>Quartier/Village</span>
             </li>
           </Link>

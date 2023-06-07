@@ -31,14 +31,22 @@ const Featured = () => {
   return (
     <div className='featured'>
       <div className="top">
-        <h1 className="title"> Objectif: <strong>+100 K</strong> membres en 2032</h1>
-        <MoreVertOutlined fontSize="small" />
+        <h1 className="title"> Objectif: <strong>+100 K</strong> membres en 2030</h1>
+        <MoreVertOutlined fontSize="small"  />
       </div>
       <div className="bottom">
         <div className="featuredChart">
-          <CircularProgressbar value={globalPercent} text={globalPercent + '%'} strokeWidth="5" />
+          <div className='item'>
+            <CircularProgressbar value={globalPercent} text={globalPercent + '%'} strokeWidth="5" />
+            <p>Temps écoulé</p>
+          </div>
+          <div className="item">
+            <CircularProgressbar value={globalPercent} text={globalPercent + '%'} strokeWidth="5" />
+            <p>Progression</p>
+          </div>
         </div>
-        <p className="title">Progression</p>
+        <hr />
+        <p className="title">Résumé</p>
         <p className="amount">{memberNumber} Membres inscrit</p>
         <p className="desc">Tous ces chiffre sont basé sur l'algorithme de la cofedalci</p>
         <div className="summary">
