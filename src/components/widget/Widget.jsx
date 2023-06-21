@@ -6,12 +6,9 @@ import AccountBalanceWalletOutLinedIcon from "@mui/icons-material/AccountBalance
 import MonetizationOnOutlined from "@mui/icons-material/MonetizationOnOutlined";
 import { Home } from "@mui/icons-material";
 import { Link } from "react-router-dom";
-import axios from "axios";
 import { useState, useEffect } from "react";
-import { app_config } from "../../config/app-config";
-import { FormatNumber } from "../../function/data";
-
-const qs = require('qs')
+import { FormatNumber, getOrganismeInfo } from "../../function/data";
+import { getFinancialInfo } from "../../function/data";
 
 const Widget = ({ type }) => {
     const [count, setCount] = useState(null)
@@ -27,17 +24,12 @@ const Widget = ({ type }) => {
     //mog -> maind'oeuvre global
 
     useEffect(() => {
-        axios.post(app_config.host_statistic, qs.stringify({
-            'action': 'organisme'
-        })).then(resp => {
-            setCount(resp.data)
-            // console.log(resp.data)
+        getOrganismeInfo().then(data => {
+            setCount(data)
         })
-        axios.post(app_config.host_statistic, qs.stringify({
-            'action': 'finance'
-        })).then(resp => {
-            setFinance(resp.data)
-            // console.log(resp.data)
+
+        getFinancialInfo().then(data => {
+            setFinance(data)
         })
     }, [])
 

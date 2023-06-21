@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react";
 import "./chart.scss"
 import { AreaChart, Area, XAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-import axios from "axios";
-import { app_config } from "../../config/app-config";
-const qs = require('qs');
+import { getMemberGraphDetails } from "../../function/data";
 
 
 // const data = [
@@ -19,10 +17,8 @@ const Chart = ({ aspect, title }) => {
   const [data, setData] = useState([]);
   
   useEffect(() => {
-    axios.post(app_config.host_statistic, qs.stringify({
-      'action': 'month_graph'
-    })).then(resp => {
-      setData(resp.data)
+    getMemberGraphDetails().then(data=>{
+      setData(data)
     })
   }, [])
   return (

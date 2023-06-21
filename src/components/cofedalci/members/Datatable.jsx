@@ -1,17 +1,11 @@
 import "./datatable.scss";
 import { DataGrid } from "@mui/x-data-grid";
-import { memberColumn } from "../../../datatablesource";
+import { memberColumn, getMember } from "../../../datatablesource";
 import { Link } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
-
-import axios from 'axios';
-import { app_config } from "../../../config/app-config";
 import Loading from "../../loading/Loading";
 import Details from "./details/Details";
 import { DarkModeContext } from "../../../context/darkModeContext";
-
-
-const qs = require('qs');
 
 function Datatable() {
   const { setShownModal } = useContext(DarkModeContext)
@@ -21,8 +15,6 @@ function Datatable() {
 
   const onDetails = (item) => {
     setModalItem(item)
-    // console.log(item)
-    // console.log(modalItem)
     setShownModal(true)
   }
 
@@ -32,12 +24,8 @@ function Datatable() {
 
 
   useEffect(() => {
-    axios.post(app_config.host, qs.stringify({
-      'action': 'find',
-      'table': 'member'
-    })).then(resp => {
-      // console.log(resp.data)
-      setData(resp.data)
+    getMember().then(data => {
+      setData(data)
       setIsLoading(false)
     })
   }, [])
@@ -64,6 +52,7 @@ function Datatable() {
       },
     },
   ];
+
   return (
     !isLoading ?
       (
@@ -80,14 +69,14 @@ function Datatable() {
             columns={memberColumn.concat(actionColumn)}
             // pageSize={25}
             rowsPerPageOptions={[9]}
-            // paginationMode="server"
-            // checkboxSelection // Desable check box
+          // paginationMode="server"
+          // checkboxSelection // Desable check box
           />
           <Details id={modalItem} />
         </div>
       )
       :
-      <Loading />
+      <Loading open={isLoading} />
   );
 };
 

@@ -3,18 +3,22 @@ import { app_config } from "../config/app-config";
 
 const qs = require('qs');
 
+/* 
+******************* Function for formating number ******************
+    This function can format all number between 0 to 999 999 999 999
+    You can implement some detail to format more the default
+*/
 export const FormatNumber = (number) => {
+    //If the number is under one thousand the return it, we didn't need format it
     if (parseInt(number / 100) < 10) {
-        // console.log(number)
         return number;
     }
+
     let formatedNumber = '';
     if (parseInt(number / 1000000000) > 0) {
-        // console.log('Fist stape loop')
         let reste = 0;
         formatedNumber = `${parseInt(number / 1000000000)}`;
         reste = number % 1000000000; // 020 000 500
-        // console.log('reste miliard: ' + reste)
         if (parseInt(reste / 100000000) > 0) {
             formatedNumber = `${formatedNumber} ${parseInt(reste / 1000000)}`;
         } else {
@@ -27,7 +31,6 @@ export const FormatNumber = (number) => {
 
 
         reste = reste % 1000000; //000 500
-        // console.log('reste milion: ' + reste)
         if (parseInt(reste / 100000) > 0) {
             formatedNumber = `${formatedNumber} ${parseInt((reste / 1000))}`;
         } else {
@@ -56,7 +59,6 @@ export const FormatNumber = (number) => {
             formatedNumber = `${parseInt(number / 1000000)}`;
 
             reste = number % 1000000;
-            // console.log('reste milion: ' + reste)
             if (parseInt(reste / 100000) > 0) {
                 formatedNumber = `${formatedNumber} ${parseInt((reste / 1000))}`;
             } else {
@@ -104,30 +106,77 @@ export const FormatNumber = (number) => {
             }
         }
     }
-    // console.log(formatedNumber);
     return formatedNumber;
 }
 
-export const GetMember = () => {
-    axios.post(app_config.host, qs.stringify({
-        'action': 'find',
-        'table': 'members'
-    })).then(resp => {
-        console.log(resp.data)
-    })
-}
+/* 
+******************* End number formating ******************
+*/
 
 
 //Statistic fonction
 
 export const getFederationByBranch = async (br_id) => {
-    let data = axios.post(app_config.host_statistic, qs.stringify({
+    return Promise.resolve(await axios.post(app_config.host_statistic, qs.stringify({
         'action': 'fededation_by_branch',
         'id': br_id
     })).then(resp => {
         // console.log(resp.data)
-        data = resp.data;
-    });
+        return resp.data;
+    }))
+}
 
-    return data;
+export const testFunction = async () => {
+    return Promise.resolve(await axios.post(app_config.host_statistic, qs.stringify({
+        'action': 'find',
+        'table': 'branch'
+    })).then(resp => {
+        return resp.data;
+    }))
+}
+
+// **************** Statistic function Get all data for statistic *****************************
+export const getFinancialInfo = async () => {
+    return Promise.resolve(await axios.post(app_config.host_statistic, qs.stringify({
+        'action': 'finance'
+    })).then(resp => {
+        return resp.data;
+    }))
+}
+export const getOrganismeInfo = async () => {
+    return Promise.resolve(await axios.post(app_config.host_statistic, qs.stringify({
+        'action': 'organisme'
+    })).then(resp => {
+        return resp.data;
+    }))
+}
+
+/*
+**************** End statistic function *****************************
+*/
+
+/*
+**************** Futures function start *****************************
+*/
+export const getHowManyMemberFor = async () => {
+    /*
+        This function check the total member for the specifyed year. Here is 2023
+    */
+    return Promise.resolve(await axios.post(app_config.host_statistic, qs.stringify({
+        'action': 'members_number',
+        'year': 2023
+    })).then(resp => {
+        return resp.data;
+    }))
+}
+
+ /*
+    This function check members for the last 6 month and send it to the memeber flux graph
+ */
+export const getMemberGraphDetails = async()=>{
+    return Promise.resolve(await axios.post(app_config.host_statistic, qs.stringify({
+        'action': 'month_graph'
+      })).then(resp => {
+        return resp.data;
+      }))
 }

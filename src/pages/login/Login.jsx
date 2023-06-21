@@ -1,5 +1,5 @@
 import './login.scss'
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useState } from 'react'
 
 import { DarkModeContext } from '../../context/darkModeContext'
 import { app_config } from '../../config/app-config'
@@ -20,8 +20,8 @@ const Login = () => {
   }
   const submitForm = (e) => {
     e.preventDefault();
-    axios.post(app_config.test, qs.stringify(data)).
-      then(resp => {
+    axios.post(app_config.test, qs.stringify(data))
+      .then(resp => {
         console.log(resp.data)
       })
   }

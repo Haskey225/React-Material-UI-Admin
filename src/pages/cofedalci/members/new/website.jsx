@@ -1,13 +1,12 @@
-import "./new.scss";
-import Sidebar from "../../../../components/sidebar/Sidebar";
-import Navbar from "../../../../components/navbar/Navbar";
+import "./website.scss";
+// import Sidebar from "../../../../components/sidebar/Sidebar";
+// import Navbar from "../../../../components/navbar/Navbar";
 import { DriveFolderUploadOutlined } from "@mui/icons-material";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { setMember } from "../../../../datatablesource";
 import { app_config } from "../../../../config/app-config";
-import { Alert, Snackbar } from "@mui/material"
-
+import { Snackbar, Alert } from "@mui/material";
 
 const qs = require('qs');
 const initialMemberState = {
@@ -28,17 +27,20 @@ const initialActivityState = {
     'speciality': '',
     'start_date': '',
     'min_month_ca': '',
-    'max_month_ca': '',
+    'max_month_ca': '10',
     'min_month_customer': '',
-    'max_month_customer': '',
+    'max_month_customer': '10',
     'total_fix_worker': 0,
     'total_contract_worker': 0,
     'total_familly_worker': 0,
     'total_intern_worker': 0,
-    'total_worker': 0
+    // 'total_worker': 0
 }
 
-export default function MemberForm() {
+const ERROR_TYPE = "error";
+const SUCCESS_TYPE = "success";
+
+export default function Website() {
     //Avatar or profile image
     const [file, setFile] = useState("");
 
@@ -51,18 +53,20 @@ export default function MemberForm() {
     const [communityState, setCommunityState] = useState(null);
 
     const [branchState, setBranchState] = useState(null);
-    const [federationState, setFederationState] = useState(null)
-    const [associationState, setAssociationState] = useState(null)
-    const [metierState, setMetierState] = useState(null)
-//Snack bar code
-    const [open, setOpen] = useState(false)
+    const [federationState, setFederationState] = useState(null);
+    const [associationState, setAssociationState] = useState(null);
+    const [metierState, setMetierState] = useState(null);
+    //Snack bar code
+    const [open, setOpen] = useState(false);
+    const [message, setMessage] = useState('');
+    const [messageType, setMessageType] = useState("warning");
 
     const onClose = () => {
-      setOpen(false)
+        setOpen(false)
     }
-  
+
     const handleClick = () => {
-      setOpen(true)
+        setOpen(true)
     }
     //end Snack bar
 
@@ -70,6 +74,7 @@ export default function MemberForm() {
         const { name, value } = e.target;
         setMemberState({ ...memberState, [name]: value });
         // console.log(value);
+        // console.log(testFordata);
     }
 
     const handleActivityState = (e) => {
@@ -168,7 +173,7 @@ export default function MemberForm() {
                     'id': value
                 })).then(resp => {
                     setMetierState(resp.data);
-                    console.log(resp.data);
+                    // console.log(resp.data);
                 })
 
                 // handleBranchChange(e)
@@ -183,13 +188,38 @@ export default function MemberForm() {
 
 
     //Sibmit form for member creation
+    const isFormFullFelled = (data, data2) => {
+        let response = 1;
+        Object.values(data).forEach(value => {
+            // console.log(value)
+            if (!value) {
+                response = response * 0;
+            }
+        });
+        Object.values(data2).forEach(value => {
+            if (!value) {
+                //console.log("aucune valeurs")
+                response = response * 0
+            }
+        });
+
+        return response;
+
+    }
     const submitForm = (e) => {
         e.preventDefault();
-        // console.log(memberState);
-        // console.log(activityState)
-        // console.log(file)
-        setMember(memberState, activityState, file)
-        handleClick()
+        if (!isFormFullFelled(memberState, activityState)) {
+            setMessage("Un ou plusieurs champs n'ont pas été renseigné");
+            setMessageType(ERROR_TYPE);
+            handleClick();//Function pour afficher la snack bare d'information
+            return 0
+        }
+        // console.log('Continuer')
+        setMember(memberState, activityState, file);
+        setMessage('Membre enregistré avec succès');
+        setMessageType(SUCCESS_TYPE);
+        handleClick();//Function pour afficher la snack bare d'information
+        // handleClick()
     }
 
     useEffect(() => {
@@ -212,19 +242,17 @@ export default function MemberForm() {
 
     return (
         <div className="new">
-            <Sidebar />
-
             <div className="newContainer">
-                <Navbar />
-                <div className="top">
-                    <h1>Ajouter un nouveau membre</h1>
-                </div>
+
                 <Snackbar
+                    anchorOrigin={{vertical: 'top', horizontal: 'center'}}
                     open={open}
-                    autoHideDuration={2000}
-                    message={'Membre enregistré avec succès'}
-                    onClose={onClose}
-                />
+                    autoHideDuration={6000}
+                    onClose={onClose}>
+                    <Alert onClose={onClose} severity={messageType} sx={{ width: '100%' }}>
+                        { message }
+                    </Alert>
+                </Snackbar>
                 <div className="bottom">
                     <h2>Info sur le membre</h2>
                     <div className="left">
@@ -336,24 +364,24 @@ export default function MemberForm() {
                             <div className="formInput">
                                 <label>Estimation chiffre d'affaire par mois</label>
                                 <div className='forminterne'>
-                                    <input require='require' name='min_month_ca' type='numeric' placeholder='Montant moyen' onChange={(e) => handleActivityState(e)} />
-                                    {/* <input require = 'require' name='max_month_ca' type='numeric' placeholder='Montant maximum' onChange={(e) => handleActivityState(e)} /> */}
+                                    <input require='require' name='min_month_ca' placeholder='Montant moyen' onChange={(e) => handleActivityState(e)} />
+                                    {/* <input require = 'require' name='max_month_ca'  placeholder='Montant maximum' onChange={(e) => handleActivityState(e)} /> */}
                                 </div>
                             </div>
                             <div className="formInput">
                                 <label>Estimation du nombre de client par mois</label>
                                 <div className='forminterne'>
-                                    <input require='require' name='min_month_customer' type='numeric' placeholder='Montant moyen' onChange={(e) => handleActivityState(e)} />
-                                    {/* <input require = 'require' name='max_month_customer' type='numeric' placeholder='Montant maximum' onChange={(e) => handleActivityState(e)} /> */}
+                                    <input require='require' name='min_month_customer' placeholder='Montant moyen' onChange={(e) => handleActivityState(e)} />
+                                    {/* <input require = 'require' name='max_month_customer'  placeholder='Montant maximum' onChange={(e) => handleActivityState(e)} /> */}
                                 </div>
                             </div>
                             <div className="formInput">
                                 <label>Estimation du nombre d ouvrier ou salarier</label>
                                 <div className='forminterne'>
-                                    <input require='require' name='total_fix_worker' type='numeric' placeholder='Fixe' onChange={(e) => handleActivityState(e)} />
-                                    <input require='require' name='total_contract_worker' type='numeric' placeholder='Contractuel' onChange={(e) => handleActivityState(e)} />
-                                    <input require='require' name='total_familly_worker' type='numeric' placeholder='Aide familialle' onChange={(e) => handleActivityState(e)} />
-                                    <input require='require' name='total_intern_worker' type='numeric' placeholder='Stagiare' onChange={(e) => handleActivityState(e)} />
+                                    <input require='require' name='total_fix_worker' placeholder='Fixe' onChange={(e) => handleActivityState(e)} />
+                                    <input require='require' name='total_contract_worker' placeholder='Contractuel' onChange={(e) => handleActivityState(e)} />
+                                    <input require='require' name='total_familly_worker' placeholder='Aide familialle' onChange={(e) => handleActivityState(e)} />
+                                    <input require='require' name='total_intern_worker' placeholder='Stagiare' onChange={(e) => handleActivityState(e)} />
                                 </div>
                             </div>
 
@@ -422,9 +450,8 @@ export default function MemberForm() {
                                 <label>Parlez nous un peux de vous <p>{'(Optionnel)'} </p></label>
                                 <textarea require='require' name="area_name" onChange={(e) => handleMemberState(e)} type='text' placeholder='Optionnel' style={{ height: '200px', width: '100%' }} ></textarea>
                             </div>
-
-
                             <button onClick={(e) => submitForm(e)}>Enregistrer</button>
+                            {/* <p style={{ color: 'red' }}>Des champs sont vide</p> */}
                         </form>
                     </div>
                 </div>

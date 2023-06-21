@@ -407,20 +407,56 @@ export const userRows = [
   },
 ];
 
-export async function GetBranch() {
-  let datas;
-  await axios.post(app_config.host, qs.stringify({
+
+// Getter for datas
+export const getBranch = async () => {
+  return Promise.resolve(await axios.post(app_config.host, qs.stringify({
     'action': 'find',
     'table': 'branch'
   })).then(resp => {
-    // //console.log(resp.data)
-    // return new Promise(resp.data)
-    datas = resp.data
-  })
-
-  return datas
+    return resp.data
+  }))
 }
 
+export const getFederation = async () => {
+  return Promise.resolve(await axios.post(app_config.host, qs.stringify({
+    'action': 'find',
+    'table': 'federation'
+  })).then(resp => {
+    return resp.data
+  }))
+}
+
+export const getAssociation = async () => {
+  return Promise.resolve(await axios.post(app_config.host, qs.stringify({
+    'action': 'find',
+    'table': 'association'
+  })).then(resp => {
+    return resp.data;
+  }))
+}
+
+export const getMetier = async () => {
+  return Promise.resolve(await axios.post(app_config.host, qs.stringify({
+    'action': 'find',
+    'table': 'metiers'
+  })).then(resp => {
+      return resp.data    
+  }))
+}
+
+export const getMember = async() => {
+  return Promise.resolve(await axios.post(app_config.host, qs.stringify({
+    'action': 'find',
+    'table': 'member'
+  }), {timeout: 5000}).then(resp => {
+    return resp.data;    
+  })).catch(err=>{
+    return err
+  })
+}
+
+// Setter for data
 export const setBranch = (val) => {
   axios.post(app_config.host, qs.stringify({
     'action': 'save',
@@ -498,6 +534,7 @@ export const setMember = (member, activity, file) => {
     console.log(resp.data)
   })
 }
+
 
 export const setDepartment = (val) => {
   axios.post(app_config.host, qs.stringify({

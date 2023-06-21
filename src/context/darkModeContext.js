@@ -1,6 +1,6 @@
-import { createContext, useEffect, useReducer, useState } from "react";
+import { createContext, useReducer, useState } from "react";
 import DarkModeReducer from "./darkModeReducer";
-import Cookies from "js-cookie";
+// import Cookies from "js-cookie";
 
 const INITIAL_STATE = {
     darkMode: false,

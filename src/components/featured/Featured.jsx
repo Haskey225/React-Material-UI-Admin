@@ -3,14 +3,11 @@ import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import { KeyboardArrowUpOutlined, MoreVertOutlined } from "@mui/icons-material";
 import { useEffect, useState } from "react";
-import axios from "axios";
-import { app_config } from "../../config/app-config";
 import { KeyboardArrowDown } from "@mui/icons-material";
 import { FormatNumber } from "../../function/data";
+import { getHowManyMemberFor } from "../../function/data";
 // import { Tooltip } from "@mui/material";
 // import { Tooltip } from "recharts";
-
-const qs = require('qs')
 
 const Featured = () => {
   const target = 100000;
@@ -20,19 +17,16 @@ const Featured = () => {
   // const monthNumber = 144;
 
   useEffect(() => {
-    axios.post(app_config.host_statistic, qs.stringify({
-      'action': 'members_number',
-      'year': 2023
-    })).then(resp => {
-      setGlobalPercent(parseInt((parseInt(resp.data.members) / target) * 100))
-      setMemberNumber(resp.data.members)
+    getHowManyMemberFor().then(data => {
+      setGlobalPercent(parseInt((parseInt(data.members) / target) * 100))
+      setMemberNumber(data.members)
     })
   }, [])
   return (
     <div className='featured'>
       <div className="top">
         <h1 className="title"> Objectif: <strong>+100 K</strong> membres en 2030</h1>
-        <MoreVertOutlined fontSize="small"  />
+        <MoreVertOutlined fontSize="small" />
       </div>
       <div className="bottom">
         <div className="featuredChart">

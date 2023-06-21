@@ -45,7 +45,8 @@ import AreaForm from "./pages/cofedalci/location/area/new/addArea";
 import FederationPresiForm from "./pages/cofedalci/president/federation/new/addFedPresi";
 import AssociationPresiForm from "./pages/cofedalci/president/association/new/addAssoPresi";
 
-
+// Website form
+import Website from "./pages/cofedalci/members/new/website";
 
 function App() {
 
@@ -56,7 +57,8 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/">
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<Website />} />
+            {/* <Route path="/" element={<Home />} /> */}
             <Route path="/login" element={<Login />} />
             <Route path="products">
               <Route index element={<List />} />
